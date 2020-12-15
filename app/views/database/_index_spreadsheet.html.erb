@@ -1,8 +1,8 @@
 <h2>Spreadsheet</h2>
 
 <%
+  @headers = @columns.map {|(k,v)| k }
   @data = []
-  @data << @columns.map {|(k,v)| k }
   @model.all.each do |m|
     @data << @columns.map {|(k,v)| m.public_send(k).to_s }
   end
@@ -13,6 +13,6 @@
 
 <button id='save_spreadsheet'>Save</button>
 
-<div id="example" data-spreadsheetvalues="<%= @data.to_json %>"></div>
+<div id="example" data-spreadsheetheaders="<%= @headers.to_json %>" data-spreadsheettablename="<%= @model.table_name %>" data-spreadsheetmodel="<%= @model.name.downcase %>" data-spreadsheetvalues="<%= @data.to_json %>"></div>
 
 <%= javascript_pack_tag 'spreadsheet' %>

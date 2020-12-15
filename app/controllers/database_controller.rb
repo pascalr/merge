@@ -118,7 +118,6 @@ class DatabaseController < ApplicationController
     logger.info "Request: #{request}"
   end
 
-
 private
   def set_model
     Rails.application.eager_load!
