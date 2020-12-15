@@ -1,0 +1,11 @@
+<%
+  r = Rails.root.join('app').join("views").join(params[:path].delete_prefix('/'))
+  content = r.read
+%>
+
+<h1>Edit <%= params[:path] %></h1>
+
+<%= form_with url: save_file_path(path: params[:path]) do |form| %>
+  <%= form.submit :save %><br>
+  <%= text_area_tag :content, content, cols: 120, rows: 30 %>
+<% end %>

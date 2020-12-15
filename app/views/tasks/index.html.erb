@@ -1,0 +1,30 @@
+<%
+  @tasks = Task.order(priority: :desc).all
+%>
+
+<h1>Tasks</h1>
+
+<table style="border-collapse: collapse;">
+  <thead>
+    <tr>
+      <th>Priority</th>
+      <th>Title</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each_with_index do |task, i| %>
+      <tr>
+        <td><%= task.priority %></td>
+        <td><%= link_to task.title, task, class: 'no_line' %></td>
+        <%#<td><%= time_ago_in_words(task.completed_at) if task.completed_at </td>%>
+      </tr>
+      <% if @tasks[i+1] && task.priority.to_i != @tasks[i+1].priority.to_i %>
+        <tr style="border-bottom: 1px solid #000;"><td></td><td></td></tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%# link_to 'New Task', new_task_path %>

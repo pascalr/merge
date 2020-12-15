@@ -1,0 +1,37 @@
+<style>
+  body {
+    background-color: #fff78c;
+  }
+  hr {
+    border-color: black;
+  }
+  li {
+    font-size: 1.6em;
+  }
+  .todo_done {
+    text-decoration: line-through;
+  }
+</style>
+<h1>TODO list</h1>
+<div>
+  <ul>
+    <li>
+    <%= form_with model: Todo.new, local: true do |f| %>
+      <%= f.text_field :content, size: 100; %>
+      <%= f.submit %>
+    <% end %>
+    </li>
+    <hr>
+    <% @todos.each do |todo| %>
+      <%= tag.li do %>
+        <%= tag.span class: todo.is_done ? "todo_done" : "" do %>
+          <%= todo.content %>
+        <% end %>
+        <%= link_to todo.is_done ? "reset" : "done", todo_path(todo, todo: {is_done: !todo.is_done}), method: :patch %>
+        <%= link_to "edit", edit_todo_path(todo) %>
+        <%= link_to "delete", todo, method: :delete, data: {confirm: 'Are you sure?'} %>
+      <% end %>
+      <hr>
+    <% end %>
+  </ul>
+</div>

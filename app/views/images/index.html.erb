@@ -1,0 +1,7 @@
+<h1>Images</h1>
+
+<%= link_to "Search for new images", find_new_images_path, method: :post %><br><br>
+
+<% @images.each do |image| %>
+  <%= image_tag inline_image_path(path: image.path), style: 'object-fit: cover; width: 128px; height: 128px;' %>
+<% end %>

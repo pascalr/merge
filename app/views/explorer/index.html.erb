@@ -1,0 +1,51 @@
+<%
+  #@files = Dir.entries(Rails.root.join("views")).reject {|n| n == "." or n == ".."}
+  # TODO: Test . and .. is safe and does not work
+  @folder = params[:folder] || ""
+  if params[:folder]
+    r = Rails.root.join("views").join(params[:folder]) # FIXME: REALLY NOT SAFE
+    items = Dir.entries(r).reject {|n| n == "."}
+  else
+    r = Rails.root.join("views")
+    items = Dir.entries(r).reject {|n| n == "." or n == ".."}
+  end
+  @images = []
+  @files = []
+  @folders = []
+  items.each do |i|
+    @folders << i && next if File.directory?(r.join(i))
+    @images << i && next if image?(r.join(i))
+    @files << i
+  end
+  #@images = items.select { |n| image?(r.join(n)) }.map {|n| Pathname(@folder).join(n)}
+  #@files = items.reject {|n| File.directory?(r.join(n))}
+  #@folders = items.select {|n| File.directory?(r.join(n))}
+%>
+
+Nouveau dossier:
+<%= form_with url: create_folder_path, remote: true, style: 'display: inline;' do |f| %>
+  <%= f.text_field :name, style: 'display: inline;' %>
+  <%= f.submit %>
+<% end %>
+Nouveau fichier:
+<%= form_with url: create_file_path, remote: true, style: 'display: inline;' do |f| %>
+  <%= f.text_field :name, style: 'display: inline;' %>
+  <%= f.submit %>
+<% end %>
+
+<h1><%= @folder.blank? ? "/" : @folder %></h1>
+
+<% (@folders || []).each do |f| %>
+  📁<%= link_to f, explorer_path(folder: Pathname(@folder).join(f)) %><br>
+<% end %>
+
+<% @images.each do |im| %>
+  <%= image_tag inline_image_path(name: im), style: 'object-fit: cover; width: 128px; height: 128px;' %>
+<% end %>
+<br>
+
+<% (@files || []).each do |f| %>🗎
+  <%= link_to f, app_path(name: 'file_viewer', filename: f, folder: @folder) %>
+  <%= link_to 'delete', delete_file_path(filename: f, folder: @folder) , method: 'delete', data: {confirm: 'Are you sure?'}%>
+  <br>
+<% end %>

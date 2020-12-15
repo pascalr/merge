@@ -1,0 +1,13 @@
+<%
+  name = File.basename(params[:filename]) # sanitize name to avoid malicious users to read any file
+  
+  if params[:folder] # FIXME: REALLY NOT SAFE
+    p = Rails.root.join('views').join(params[:folder]).join(name)
+  else
+    p = Rails.root.join('views').join(name)
+  end
+  @text = File.read(p)
+%>
+
+<%# @text.html_safe %>
+<%= simple_format @text %>

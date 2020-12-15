@@ -1,0 +1,43 @@
+<style>
+body, html {
+  height: 100%;
+}
+body {
+  margin-top: 0px;
+  /*Source: http://www.seekgif.com/free-image/white-abstract-wallpapers-hd-15116.html*/
+  background-image: url(<%= inline_image_path(name: "white-background.jpeg") %>) !important;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+#icons img {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+</style>
+
+<div id="icons">
+<a href="/view?name=Liste d'épicerie"><%= image_tag inline_image_path(name: "1575322767912_image.png"), width: 64, height: 64 %></a>
+<%= link_to image_tag(inline_image_path(name: "calculator.svg"), width: 64, height: 64), calc_path %>
+<a href="/view?name=Liste d'épicerie"><%= image_tag inline_image_path(name: "mouse.svg"), width: 64, height: 64 %></a>
+<a href="/view?name=Liste d'épicerie"><%= image_tag inline_image_path(name: "gears.svg"), width: 64, height: 64 %></a>
+<a href="/view?name=Liste d'épicerie"><%= image_tag inline_image_path(name: "robot_arm.svg"), width: 64, height: 64 %></a>
+<a href="/view?name=Liste d'épicerie"><%= image_tag inline_image_path(name: "internet.svg"), width: 64, height: 64 %></a>
+<a href="/view?name=Liste d'épicerie"><%= image_tag inline_image_path(name: "money.svg"), width: 64, height: 64 %></a>
+
+<br/>
+
+<a href="/view?name=Liste d'épicerie"><%= image_tag inline_image_path(name: "1575399072750_image.png"), width: 64, height: 64 %></a>
+<a href="/view?name=Liste d'épicerie"><%= image_tag inline_image_path(name: "1575399501187_image.png"), width: 64, height: 64 %></a>
+<a href="/view?name=Liste d'épicerie"><%= image_tag inline_image_path(name: "1575399508109_image.png"), width: 64, height: 64 %></a>
+<a href="/view?name=Liste d'épicerie"><%= image_tag inline_image_path(name: "1575399516179_image.png"), width: 64, height: 64 %></a>
+<a href="/view?name=Liste d'épicerie"><%= image_tag inline_image_path(name: "1575399525010_image.png"), width: 64, height: 64 %></a>
+
+<br/>
+
+<a href="https://news.ycombinator.com/"><%= image_tag inline_image_path(name: "1575399678859_image.png"), width: 64, height: 64 %></a>
+<a href="https://meteo.gc.ca/city/pages/qc-136_metric_f.html"><%= image_tag inline_image_path(name: "1578091188486_image.png"), width: 64, height: 64 %></a>
+
+<br/>
+</div>

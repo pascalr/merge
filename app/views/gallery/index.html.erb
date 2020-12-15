@@ -1,0 +1,11 @@
+<h1>Images</h1>
+
+<%= link_to "Search for new images", find_new_images_path, method: :post %><br><br>
+
+<% Image.all.each do |image| %>
+  <div>
+    <div><%= image.id %></div>
+    <%= image_tag image_v2_path(path: image.path), style: 'object-fit: cover; width: 128px; height: 128px;' %>
+  </div>
+<% end %>
+

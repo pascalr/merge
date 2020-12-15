@@ -1,0 +1,19 @@
+<%
+  @events = (Contact.all.map do |contact|
+    next unless contact.birthday
+    e = Event.new(title: "#{contact.surnom || contact.name} a #{Date.today.year - contact.birthday.year} ans.") 
+    e.start_time = contact.birthday.change(year: Date.today.year)
+    e
+  end).compact
+%>
+
+<%= month_calendar events: Event.all + @events do |date, events| %>
+  <%= date.day %>
+  <%# link_to '+', new_meal_path(day: date.day, month: date.month, year: date.year) %>
+
+  <% events.each do |event| %>
+    <div>
+      <%= event.title %>
+    </div>
+  <% end %>
+<% end %>

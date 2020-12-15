@@ -1,0 +1,12 @@
+<%
+  @music = Music.find params[:id]
+%>
+
+<style>
+  #chords_content {
+    column-count: <%= params[:column_count] || 1 %>;
+  }
+</style>
+<div id="chords_content">
+  <%= simple_format @music.chords %>
+</div>

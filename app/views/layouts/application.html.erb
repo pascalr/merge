@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Merge</title>
+    <title>Reference</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,33 @@
   </head>
 
   <body>
+    <% unless flash.empty? %>
+      <script type="text/javascript">
+         <% flash.each do |f| %>
+       <% type = f[0].to_s.gsub('alert', 'error').gsub('notice', 'info') %>
+      	 toastr['<%= type %>']('<%= f[1] %>');
+      <% end %>
+      </script>
+    <% end %>
+    <% unless current_user.nil? %>
+      <div class="topnav">
+        <%= link_to "Desktop", desktop_path, class: 'topnavlink' %>
+        <%= link_to "Personal", personal_path, class: 'topnavlink' %>
+        <%= link_to "Gallery", images_path, class: 'topnavlink' %>
+        <%= link_to "Files", explorer_path, class: 'topnavlink' %>
+        <%= link_to "Database", database_path, class: 'topnavlink' %>
+        <%= link_to "Todo", todos_path, class: 'topnavlink' %>
+        <%= link_to "Bookmarks", bookmarks_path, class: 'topnavlink' %>
+        <%= link_to "Calendrier", calendar_path, class: 'topnavlink' %>
+        <%= link_to "Tasks", tasks_path, class: 'topnavlink' %>
+        <%= link_to "Parts", parts_path, class: 'topnavlink' %>
+        <%= link_to "Purchases", purchases_path, class: 'topnavlink' %>
+        <%= link_to "Shopping list", shopping_list_path, class: 'topnavlink' %>
+        <%= link_to "Cheatsheets", cheatsheet_path, class: 'topnavlink' %>
+        <%= link_to "Editor", editor_path, class: 'topnavlink' %>
+        <%= link_to destroy_user_session_path, class: 'topnavlink', method: :delete do %>Log out<% end %>
+      </div>
+    <% end %>
     <%= yield %>
   </body>
 </html>

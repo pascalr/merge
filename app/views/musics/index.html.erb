@@ -1,0 +1,22 @@
+<style>
+</style>
+<h1>Mes musiques</h1>
+<div>
+  <%= form_with model: Music.new, local: true do |f| %>
+    <%= f.text_field :name, size: 40 %> by
+    <%= f.text_field :by, size: 30 %>
+    <%= f.submit %>
+  <% end %>
+  <hr>
+  <% @musics.each do |music| %>
+    <div>
+      <%= music.name %> - <%= music.by %>
+      <%= link_to '[video]', music.video if music.video %>
+      <%= link_to '[chords]', chords_viewer_path(id: music.id, column_count: 2) if music.chords %>
+      <%# link_to todo.is_done ? "reset" : "done", database_record_path(todo, redirect_to: todos_path, todo: {is_done: !todo.is_done}), method: :patch %>
+      <%= link_to '[youtube]', "https://www.youtube.com/results?search_query=#{CGI.escape(music.name)}+#{CGI.escape(music.by)}" %>
+      <%= link_to "edit", edit_music_path(music) %>
+      <%= link_to "delete", music, method: :delete, data: {confirm: 'Are you sure?'} %>
+    </div>
+  <% end %>
+</div>

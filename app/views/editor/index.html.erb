@@ -1,0 +1,35 @@
+<%
+  #@files = Dir.entries(Rails.root.join("views")).reject {|n| n == "." or n == ".."}
+  # TODO: Test . and .. is safe and does not work
+  r = Rails.root.join('app').join("views")
+  @files = r.glob("**/*").reject(&:directory?)
+  #folders = Dir.entries(r).reject {|n| n == "." or n == ".."}
+  #@images = []
+  #@files = []
+  #@folders = []
+  #items.each do |i|
+  #  @folders << i && next if File.directory?(r.join(i))
+  #  @images << i && next if image?(r.join(i))
+  #  @files << i
+  #end
+  #@images = items.select { |n| image?(r.join(n)) }.map {|n| Pathname(@folder).join(n)}
+  #@files = items.reject {|n| File.directory?(r.join(n))}
+  #@folders = items.select {|n| File.directory?(r.join(n))}
+%>
+
+<h1>Editor</h1>
+
+<%= link_to "New view", new_file_path %>
+<br>
+<br>
+
+<% @files.each do |file| %>
+  <% name = file.sub(/^.*app\/views/, '') %>
+  <%= link_to name, edit_file_path(path: name) %><br>
+<% end %>
+
+<p>View a lot of templates to start a new view</p>
+
+<p>Be able to add new views.</p>
+
+<p>Be able to edit views.</p>
