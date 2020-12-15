@@ -24,12 +24,4 @@ module DatabaseHelper
     #columns << ["updated_at", :datetime]
     render file: "database/_database_table", locals: {model: model, columns: columns, options: options}
   end
-  def render_template
-    case params[:template]
-    when 'editing' then
-      render partial: 'index_edit'
-    else
-      render partial: 'index_table'
-    end
-  end
 end

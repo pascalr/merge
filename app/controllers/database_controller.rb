@@ -112,6 +112,12 @@ class DatabaseController < ApplicationController
     @columns << ["updated_at", :datetime]
   end
 
+  def save_all
+    logger.info "--- Inside save_all ---"
+    logger.info "Params: #{params}"
+    logger.info "Request: #{request}"
+  end
+
 
 private
   def set_model

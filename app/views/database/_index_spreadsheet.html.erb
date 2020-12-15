@@ -1,0 +1,18 @@
+<h2>Spreadsheet</h2>
+
+<%
+  @data = []
+  @data << @columns.map {|(k,v)| k }
+  @model.all.each do |m|
+    @data << @columns.map {|(k,v)| m.public_send(k).to_s }
+  end
+  100.times do
+    @data << @columns.map {|(k,v)| nil }
+  end
+%>
+
+<button id='save_spreadsheet'>Save</button>
+
+<div id="example" data-spreadsheetvalues="<%= @data.to_json %>"></div>
+
+<%= javascript_pack_tag 'spreadsheet' %>
