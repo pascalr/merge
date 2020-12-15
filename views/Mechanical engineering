@@ -1,0 +1,631 @@
+<!-- SECTION *Menu -->
+<style>
+#menu {
+  background-color: black;
+  color: white;
+}
+.item:hover {
+  background-color: orange;
+}
+.item {
+  padding-left: 6px;
+  padding-right: 10px;
+  border-right: solid 1px white;
+  cursor: pointer;
+}
+</style>
+
+<div id="menu">
+<span class="item" onclick="menuItemClicked(this)">Ressorts</span>
+<span class="item" onclick="menuItemClicked(this)">Vis-Écrou</span>
+<span class="item" onclick="menuItemClicked(this)">Pivots</span>
+<span class="item" onclick="menuItemClicked(this)">Moteurs</span>
+<span class="item" onclick="menuItemClicked(this)">Bearings</span>
+<span class="item" onclick="menuItemClicked(this)">Calculs</span>
+<span class="item" onclick="menuItemClicked(this)">Travail du bois</span>
+<span class="item" onclick="menuItemClicked(this)">Engrenages</span>
+<span class="item" onclick="menuItemClicked(this)">Matériaux</span>
+<span class="item" onclick="menuItemClicked(this)">Transmission</span>
+<span class="item" onclick="menuItemClicked(this)">Électrique</span>
+<span class="item" onclick="menuItemClicked(this)">Camera</span>
+</div>
+
+<script defer>
+function menuItemClicked(item) {
+  console.log('lalalal')
+  let siblings = item.parentElement.children;
+  for (let i = 0; i < siblings.length; i++) {
+    let elem = document.getElementById(siblings[i].innerText)
+    if (elem) {elem.style.display = "none";}
+  }
+  let elem = document.getElementById(item.innerText)
+  if (elem) {elem.style.display = "block";}
+}
+</script>
+<!-- SECTION *Ressorts -->
+<div id="Ressorts">
+<h1>Traitement par la chaleur</h1>
+Music Wire ASTM A 228 	Closes 	500º F 	30 minutes
+<br/>
+Source: https://www.acxesspring.com/espanol/how-to-heat-treat-spring-steel.html
+
+<h1>Les ressorts</h1>
+<p>Voici un guide de fabrication et d'utilisation des ressorts.</p>
+Attention, je dois ajouter des spires parce que les spires qui sont sur les supports de chaque côtés ne sont pas actives...
+<h2>Les ressorts de torsion</h2>
+<p>
+Torsion springs should be deflected in the direction that closes the coils.
+<br/><br/>
+Double torsion springs can be used when twice the force is required or when you need an even dist    ribution of torque.
+<br/><br/>
+Usually about 1 extra wind is added so the cable stays in tension.
+<br/><br/>
+D'habitude, le ressort rétrécit, mais se rallonge. Là il ne peut pas se rallonger... Quelle est l'effet sur le ressort???
+</p>
+<h3>Les ressorts de torsion cylindriques à spires</h3>
+
+<script>
+function calculate() {
+  var result = document.getElementById('result')
+  result.innerText = ""
+
+  // variables
+  var Rm = parseFloat(this.Rm.value)
+  var h = parseFloat(this.h.value)
+  var Dd = parseFloat(this.Dd.value)
+  var nsup = parseFloat(this.nsup.value)
+  var F = parseFloat(this.F.value)
+  var Nb = parseInt(this.Nb.value)
+  var Kf = parseFloat(this.Kf.value)
+  var d = parseFloat(this.d.value)
+  var E = parseFloat(this.E.value)
+  var D_roul = parseFloat(this.D_roul.value)
+  var l_max = parseFloat(this.l_max.value)
+  var d = parseFloat(this.d.value)
+  var N_ina = parseFloat(this.N_ina.value)
+
+  // Calcul de la résistance pratique à l'enroulement
+  var Rpe = Rm*0.7
+
+  // Calcul du nombre de tour maximale selon l'espace et la diamètre du fil.
+  var N_max = Math.floor(l_max/d)
+
+  // Calcul du diametre d'enroulement centre à centre
+  // When the spring is released form the mandrel, it springs back. This is the equation for music wire.
+  // source: https://www.daycounter.com/Calculators/Springs/
+  // wire 
+  var x = 23.57// x is the spring index: D/d, FIXME: Let's approximate to D_roul
+  var k = -0.01245*x + 0.98425 // k is the diameter coefficient
+  var D = (D_roul + d)/k
+
+  // Calcul de l'angle que le ressort doit effectué pour parcourir la course
+  var nbTourATourner = (h/(Dd*3.1416))+nsup
+  var alpha = nbTourATourner*2*3.1416
+
+  // Calculs de moments
+  var m = (F * 9.81)*(Dd/2)/Nb
+  var m_rup = (Rpe*3.1416*Math.pow(d,3))/(Kf*32)
+
+  var d_calc = Math.pow((Kf*32*m)/(Rpe*3.1416),1/3)
+
+  var mom = Math.min(m,m_rup)
+  var mom_gen = mom*Nb
+
+  if (m_rup < m) {
+    var pourcentage = (mom/m*100).toFixed(1)
+
+    result.innerText += `Le fil choisi est trop petit. Il aurait du mesurer au moins ${d_calc.toFixed(2)} mm pour résister. On continue avec le moment maximale de ${mom_gen.toFixed(1)} N/mm². Seulement ${pourcentage}% du poids de la charge va être compensé.\r\n\r\n`
+  } else {
+    result.innerText += `Le fil est suffisamment gros pour résister.\r\n\r\n`
+  }
+
+  var N = E*Math.pow(d,4)*alpha/(mom*64*D)
+  var N_tot = N + N_ina
+
+  // Calcul du diamètre minimale après torsion
+  // FIXME: Ca devrait etre le nombre de spires totale et non le nombre de spire active.
+  // var D_min = (D*N)/(N+nbTourATourner) FIXME: angle ou nb tour?
+  var D_min = (D*N)/(N+alpha)
+
+  var long = D*3.1416*N+100
+
+  result.innerText += `NB. Le diamètre de l'axe doit être plus petit que ${D_min.toFixed(2)} mm.\r\n\r\n`
+  
+  // Set calculated values
+  this.Rpe.value = Rpe.toFixed(2)
+  this.alpha.value = alpha.toFixed(2)
+  this.m.value = m.toFixed(2)
+  this.m_rup.value = m_rup.toFixed(2)
+  this.N.value = N.toFixed(2)
+  this.N_max.value = N_max
+  this.d_calc.value = d_calc.toFixed(2)
+  this.D.value = D.toFixed(2)
+  this.D_min.value = D_min.toFixed(2)
+  this.mom_gen.value = mom_gen.toFixed(2)
+  this.long.value = long.toFixed(0)
+  this.N_tot.value = N_tot.toFixed(0)
+  this.Nb_tour.value = nbTourATourner
+}
+window.onload = calculate()
+</script>
+
+<form id="theForm" oninput="calculate()">
+<h4>Données</h4>
+
+d: Diamètre du fil (mm):<input id="d" type="number" value="0.889"><br/>
+E: module d'élasticité longitudinal (N/mm<sup>2</sup>)<input id="E" type="number" value="190000"><br/>
+Rm: résistance à la tension (N/mm<sup>2</sup>)<input id="Rm" type="number" value="2234"><br/>
+Rpe: résistance pratique à l'extension [0.7*Rm] (N/mm<sup>2</sup>)<input id="Rpe" readonly><br/>
+Kf: coefficient de concentration de contraintes [f(D/d)]:<input id="Kf" value="1.1" readonly><br/>
+M_rup: moment à la résistance pratique [Rpe*π*d³/(32*Kf)] (N.mm):<input id="m_rup" readonly><br/>
+
+<br/>
+
+Nb: Nombre de ressort:<input id="Nb" type="number" value="1"><br/>
+l_max: Longueur maximale (mm):<input id="l_max" type="number" value="200"><br/>
+N_max: Nombre de tour maximal [l_max/d]:<input id="N_max" type="number" readonly><br/>
+N_ina: Nombre de spires inactives:<input id="N_ina" value="6"><br/>
+D_roul: Diamètre du mandrin d'enroulement (mm):<input id="D_roul" type="number" value="16"><br/>
+D: Diamètre d'enroulement [D+d] (mm):<input id="D" readonly><br/>
+
+<br/>
+
+Dd: Diamètre du tambour d'enroulement (mm):<input id="Dd" type="number" value="66.675"><br/>
+F: charge [diviser par 2 si avec poulie] (kg):<input id="F" type="number" value="2"><br/>
+M: moment requis par ressort [F*9.81*(Dd/2)/Nb] (N.mm):<input id="m" readonly><br/>
+
+<br />
+
+h: Distance à monter [multiplier par 2 si avec poulie] (mm):<input id="h" type="number" value="2540"><br/>
+nsup: Nombre de tour supplémentaire pour garder de la tension:<input id="nsup" type="number" value="1"><br/>
+alpha: Angle d'enroulement du ressort [2π*((h/(π*Dd))+nsup)] (radians):<input readonly id="alpha"><br/>
+
+<h4>Résultats</h4>
+
+<div id="result" style="white-space: pre-line;">Résultats...</div><p>
+
+</p>
+
+N: nombre de spires actives:<input id="N" readonly><br/>
+N_tot: Nombre de spires totales:<input id="N_tot" readonly><br/>
+D_min: diamètre minimale après la torsion:<input id="D_min" readonly><br/>
+d_calc: Diamètre du fil (mm):<input id="d_calc" readonly><br/>
+mom_gen: Moment généré (N/mm<sup>2</sup>):<input id="mom_gen" readonly><br/>
+long: Longueur de fil nécessaire [π*D*N+100](mm):<input id="long" readonly><br/>
+Nb_tour: nombre de tour à tourner:<input id="Nb_tour" readonly><br/>
+</form>
+
+<p></p>
+<h1>Sources</h1>
+Guide des sciences et technologies industrielles - Jean-Louis FANCHON
+</div>
+<!-- SECTION *Vis-Écrou -->
+<div id="Vis-Écrou">
+<h1>Les systèmes vis-écrous</h1>
+<h2>Couple vs Force</h2>
+<p>
+Mon moteur Nema 17 possède un couple de 0.46 N*m. Avec une tige filetée 0.25", disons que la force est appliquée à 0.24", div par 2 donne 0.12". À peu près 3 mm. Donc 150 N. 10% efficacité. 15 N. Donc mon moteur avec une tige filetée pourrait soulever à peu près 1.53 kg. Pas sûr de mon calcul.
+</p>
+
+<p>
+La puissance de mon moteur (N*m/s) est trouvée par couple (N*m) * vitesse (tour/s).
+La puissance requise de la tige fileté (N*m/s) est trouvée par force (N) * distance par tour (m/tour) * (tour/s)
+En égalant les deux puissances et enlevant la vitesse qui se trouve des deux côtés, on obtient:
+Le couple (N*m) est équivalent à la force de la charge multiplié par la distance par tour.
+
+Donc pour 460 N*mm et une tige filetée de 0.25" X 20 NC (pas 0.05" ou 1.27 mm): 362 N.
+
+Avec une efficacité de 10%: 36.2N ou 3.7 kg.
+</p>
+
+<p>
+EfficiencyBalls screws also offer higher levels of efficiency because rolling contact provides a lower coefficient of friction than sliding contact.  The efficiency of ball screws isrelatively constant and is typically better than 90%.  The efficiency of lead screws, on the other hand, typically ranges between 20% and 80%.  The efficiency of a lead screw is highly dependent upon its helix angle.  As a general rule, higher helix angles mean higher efficiency.  A higher helix angle is more efficientbecause less of the energy used to drive the lead screw goes into overcoming friction.  This is because the number of times the screw must rotate to achieve the same linear displacement is reduced on a high helix screw.  A disadvantage of a high helix angle is that more torqueis required to turn the screw
+
+It’s important to note that when the efficiency of a lead screw exceeds 50%, the lead screw becomes back-drivable, which means it can be driven backwards by the load.
+
+On the other hand, plastic and stainless steel lead screw assembliesaretypicallylimited to a duty cycle of 50% under the rated load.  Lead screw assemblies that use bronze nuts have higher load capacities,but these heavier loads increase frictionalheat so their duty cycles must be lower, often as low as 10%.
+</p>
+</div>
+<!-- SECTION *Pivots -->
+<div id="Pivots">
+<h1>Les pivots</h1>
+<pre>
+# Il y a un point A,B et C. Le moteur au point A applique une force au point B
+# qui tourne 180 deg autour du point C. Pour que ce soit plus simple, on aligne
+# les points a la vertical. Le point A est a 0,0
+
+A = [0,0];
+C = [0,10];
+
+n = 30; # Le nombre de points
+
+thetas = [pi/2:pi/n:3*pi/2];
+alphas = zeros(1,n+1);
+ABX = zeros(1,n+1);
+ABY = zeros(1,n+1);
+r = 1;
+
+BX = r*cos(thetas);
+BY = r*sin(thetas)+C(2);
+
+for i = [1:n+1]
+    B = [BX(i),BY(i)];
+    AB = B - A;
+    CB = B - C;
+    ABX(i) = AB(1);
+    ABY(i) = AB(2);
+    angle1 = atan2d(AB(2),AB(1));
+    angle2 = mod(atan2d(CB(2),CB(1)) + 360, 360);
+    alphas(i) = mod(angle2 - angle1 + 360, 360);
+end
+
+figure
+hold on
+plot(A(1),A(2))
+plot(C(1),C(2))
+plot(BX,BY)
+xlabel('x')
+ylabel('y')
+axis([-2  2 -1 12])
+title('Position des points')
+
+figure
+hold on
+plot(linspace(0,180,n+1), sind(alphas))
+plot([90 90],[0 1])
+axis([0  180 0 1])
+title('Angle AB')
+</pre>
+</div>
+<!-- SECTION Moteurs -->
+<div id="Moteurs">
+<h1>Les moteurs</h1>
+Il va probablement falloir que ce soit des servos-moteurs et non des steppers moteurs, parce que avec un servo j'ai le feedback du positionnement, alors je peux détecter s'il y a une anomalie ou une erreur.
+<h2>Nema 17</h2>
+<p>
+ You'll find that you need the most torque during acceleration. Since acceleration is linear, you need the same amount of torque at your max speed as you do when you start from a stop. This limits you to certain speed, where you have enough torque to accelerate at a given rate.
+Some people accelerate faster, and limit their top speed. Others accelerate lower, so they can run a bit faster.
+Source: https://www.cnczone.com/forums/stepper-motors-drives/373098-cnc.html
+</p>
+<p>
+For a given machine velocity, the faster you can spin the stepper the better.
+Since steppers have a fixed resolution, spinning twice as fast effectively doubles the resolution, and can result in smoother motion, especially at low speeds.
+</p>
+<h2>Vitesse</h2>
+La vitesse maximale que le stepper moteur peut aller dépends du moteur et du controlleur. Les facteurs sont la résolution du moteur, et la fréquence du controlleur. Si le controlleur aurait une fréquence super élevé, le moteur pourrait tourner super vite. Mais en pratique, plus que la vitesse augmente et plus que le couple diminue, et il est peu pertinent d'aller plus haut que 1500 RPM.
+<h2>Temps de course</h2>
+Le temps de course d'un stepper doit prendre en compte l'accélération et non seulement la vitesse. 
+
+<h2>Moteur DC</h2>
+<p>
+https://www.electricaltechnology.org/2015/11/what-are-dc-drives-types-of-electrical-dc-drives.html
+In DC motors, the speed is proportional to the armature voltage and inversely proportional to the field current. And also, the armature current is proportional to the motor torque.
+<img src="/images/1595428856642_image.png">
+</p>
+
+pwm
+
+</div>
+<!-- SECTION *Bearings -->
+<div id="Bearings">
+<h1>Les bearings</h1>
+Deep groove ball bearings by nature of their design can carry axial loads either alone or in combination with radial loads. Axial load capacity of standard bearings is 0.5 times the Basic Static Load Rating, CO of that bearing. Smaller bearings should not be subject to a load greater than 0.25 times CO. Excessive axial loads can lead to serious reduction of bearing service life.
+<pre>
+[6200] -> d: 10 mm, D: 30 mm, B: 9mm
+
+[R6] -> d: 3/8, D: 7/8, B: 0.2812
+Dynamic Load Rating (Cr) 	749	lbs
+Static Load Rating (Cor) 	301	lbs
+
+Je prendrais donc des R6-2RS.
+
+
+608
+
+Principal Dimensions
+Inside diameter: 8mm
+Outside diameter: 22mm
+Width: 7mm
+
+Basic Load Ratings
+Dynamic: 3.45kn
+Static: 1.37kn
+
+</pre>
+</div>
+<!-- SECTION *Calculs -->
+<div id="Calculs">
+<h1>Calcul de poids</h1>
+<script>
+function calculatePoids() {
+  var result = document.getElementById('result')
+  result.innerText = ""
+
+  // variables
+  var l1 = parseFloat(this.l1.value)
+  var l2 = parseFloat(this.l2.value)
+  var l3 = parseFloat(this.l3.value)
+  var density = parseFloat(this.density.value)
+  var k1 = this.unit_long.value === "mm" ? 0.001 : 0.0254;
+  var k2 = this.unit_poids.value === "kg" ? 1 : 2.20462;
+
+  var volume = l1 * l2 * l3;
+  var volume_in_m3 = l1 * l2 * l3 * Math.pow(k1,3);
+  var poids = volume_in_m3 * density * k2;
+
+  // Set calculated values
+  this.volume.value = volume
+  this.poids.value = poids
+  this.density_val.value = density
+}
+window.onload = calculate()
+</script>
+
+<form id="theForm" oninput="calculatePoids()">
+
+Matériau:<select id="density">
+  <option value="450">épinette</option>
+  <option value="7700" selected>acier</option>
+</select><br/>
+Unité de longueur:<select id="unit_long">
+  <option value="mm">mm</option>
+  <option value="in" selected>in</option>
+</select><br/>
+Unité de poids:<select id="unit_poids">
+  <option value="lb" selected>lb</option>
+  <option value="kg">kg</option>
+</select><br/>
+l1:<input id="l1" type="number" value="0"><br/>
+l2:<input id="l2" type="number" value="0"><br/>
+l3:<input id="l3" type="number" value="0"><br/>
+<br/>
+
+Densité (kg/m³):<input id="density_val" readonly><br/>
+Volume:<input id="volume" readonly><br/>
+Poids:<input id="poids" readonly><br/>
+</form>
+</div>
+<!-- SECTION *Travail du bois -->
+<div id="Travail du bois">
+<h1>Travail du bois</h1>
+<h2>"Masonite"</h2>
+<p>Je coirs qu'en général ils creusent une cavité pour encastré le masonite derrière les meubles. Mais ça risque d'être un peu difficile sans scie à table. Ex: https://www.youtube.com/watch?v=9MWdBlbT9AE&t=325s. Est-ce que c'est nécessaire?</p>
+</div>
+<!-- SECTION *Engrenages -->
+<div id="Engrenages">
+<h1>Engrenages</h1>
+<p>Pour que deux engrenages s'imbriquent, ils doivent posséder le même angle de pression et le même module.</p>
+
+<p>Module. Le module utilisé est une valeur standardisée (puisqu'un outil fabrique un seul module). Les valeurs principales (mm) sont 0.06, 0.08, 0.10, 0.12, 0.15, 0.20, 0.25, 0.30, 0.40, 1.0, 1.25, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10, 12, 16, 20, 25, 32, 40, 50, 60. Dans la liste, peut-être rajouter aussi les modules secondaires. Mettre les primaires en bold et les secondaires normals.</p>
+
+<p>
+For pressure angle 20 degrees, the minimum number of teeth free of undercutting is 17. However, gears with 16 teeth or less can be usable if their strength and contact ratio pose any ill effect. z=2/sin²(alpha). Source: https://khkgears.net/new/gear_knowledge/gear_technical_reference/involute_gear_profile.html
+</p>
+
+<pre>
+https://engineerdog.com/2017/01/07/a-practical-guide-to-fdm-3d-printing-gears/
+
+How few teeth is too few?
+
+This is information that can be looked up in resources like the Machinery Handbook.  13 is the minimum recommended for gears with a 20 deg pressure angle, and 9 is the minimum recommended for gears with a 25 deg pressure angle.
+
+Fewer teeth that that are not recommended because it would require undercut, which weakens the teeth and is tougher to 3D print without having meshing problems.
+</pre>
+
+<h2>Efforts sur les dentures</h2>
+
+<p>
+Si rendement = 1, la puissance de chaque engrenage est la même et équivaut au couple (N*m) multiplié par la vitesse angulaire. (rad/s)
+</p>
+
+<p>
+La force tangentiel Ft équivaut au couple diviser par le rayon.
+</p>
+
+<p>
+La force radiale Fr équivaut à la force tangentiel multiplié par la tangente de l'angle de pression.
+</p>
+
+<p>
+La force totale sur la denture est donc de Ft/cos(alpha).
+</p>
+
+<script>
+function calculateEfforts() {
+  // variables
+  var C = parseFloat(this.C.value)
+  var b = parseFloat(this.b2.value)
+  var m = parseFloat(this.m2.value)
+  var Y = parseFloat(this.Y2.value)
+  var Z = parseFloat(this.Z2.value)
+  var r = Z*m/2/1000
+  var d = Z*m
+  var alpha = parseFloat(this.alpha2.value) * Math.PI / 180
+
+  var density = parseFloat(this.density.value)
+  var k1 = this.unit_long.value === "mm" ? 0.001 : 0.0254;
+  var k2 = this.unit_poids.value === "kg" ? 1 : 2.20462;
+
+  var Ft = C/r
+  var Fr = Ft*Math.tan(alpha)
+  var F = Ft/Math.cos(alpha)
+
+  var sigma = Ft/(b*m*Y)
+
+  // Set calculated values
+  this.d2.value = d
+  this.Ft.value = Ft
+  this.Fr.value = Fr
+  this.F2.value = F
+  this.sigma2.value = sigma
+}
+window.onload = calculate()
+</script>
+
+<form id="theForm" oninput="calculateEfforts()">
+
+Matériau:<select id="density">
+  <option value="450">épinette</option>
+  <option value="7700" selected>acier</option>
+</select><br/>
+Unité de longueur:<select id="unit_long">
+  <option value="mm">mm</option>
+  <option value="in" selected>in</option>
+</select><br/>
+Unité de poids:<select id="unit_poids">
+  <option value="lb" selected>lb</option>
+  <option value="kg">kg</option>
+</select><br/>
+Couple <i>C</i> [N.m]:<input id="C" type="number" value="0"><br/>
+Nombre de dents <i>Z</i>:<input id="Z2" type="number" value="0"><br/>
+Angle de pression <i>α</i> [deg]:<input id="alpha2" type="number" value="20"><br/>
+Module <i>m</i> [mm]:<select id="m2">
+0.06, 0.08, 0.10, 0.12, 0.15, 0.20, 0.25, 0.30, 0.40, 1.0, 1.25, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10, 12, 16, 20, 25, 32, 40, 50, 60
+  <option value="0.06">0.06</option>
+  <option value="0.08">0.08</option>
+  <option value="0.10">0.10</option>
+  <option value="0.12">0.12</option>
+  <option value="0.15">0.15</option>
+  <option value="0.20">0.15</option>
+  <option value="0.20">0.20</option>
+  <option value="0.25">0.25</option>
+  <option value="0.30">0.30</option>
+  <option value="0.40">0.40</option>
+  <option value="1.0" selected>1.0</option>
+  <option value="1.25">1.25</option>
+  <option value="1.5">1.5</option>
+  <option value="2">2</option>
+  <option value="2.5">2.5</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+  <option value="6">6</option>
+  <option value="8">8</option>
+  <option value="10">10</option>
+  <option value="12">12</option>
+  <option value="16">16</option>
+  <option value="20">20</option>
+  <option value="25">25</option>
+  <option value="32">32</option>
+  <option value="40">40</option>
+  <option value="50">50</option>
+  <option value="60">60</option>
+</select><br/>
+Largeur <i>b</i> [mm]:<input id="b2" type="number" value="0"><br/>
+Facteur <i>Y</i> [mm]:<input id="Y2" type="number" value="0"><br/>
+<br/>
+
+Diamètre primitif [mm]:<input id="d2" readonly><br/>
+Force tangentielle [N]:<input id="Ft" readonly><br/>
+Force radiale [N]:<input id="Fr" readonly><br/>
+Force totale [N]:<input id="F2" readonly><br/>
+Contrainte [N/mm²]:<input id="sigma2" readonly><br/>
+</form>
+
+<h2>Calcul de la résistance de la dent (méthode de Lewis)</h2>
+<p>
+C'est une approximation et une étude simplifiée.
+</p>
+
+<p>
+La contraine maximale équivaut à la force tangentielle diviser par (la largeur de la dent, le module et une constance Y). À 12 dents, Y vaut: 0.245. À 60 dents, Y vaut 0.42.
+</p>
+
+<p>
+La contrainte maximale doit être plus petite que la résistance à la tension du matériau.
+</p>
+
+<p>
+Mon calcul me donne une contraine de 11 MPa pour la petite menante et 1 MPa pour la grande menée. C'est bon!
+</p>
+
+<p>
+Le calcul de la force se fait avec la roue menante. Par la 2e loi de Newton, la même force va être appliquée à la roue menée. Elle aura donc un plus grand couple (même force, mais plus grande distance), toutefois la vitesse angulaire va diminuée.
+</p>
+
+</div>
+<!-- SECTION *Matériaux -->
+<div id="Matériaux">
+<h1>Matériaux</h1>
+<h2>ABS</h2>
+<h2>PLA</h2>
+Properties*	ABS	PLA
+Tensile Strength**		37 MPa
+
+<h2>Acier</h2>
+Tensile Strength, Yield	370 MPa
+
+<h2>Résistance à la tension</h2>
+<select id="density" onchange="document.getElementById('tensileStrength').value = this.value">
+  <option value="27">ABS</option>
+  <option value="37">PLA</option>
+  <option value="370" selected>acier</option>
+</select>
+<input id="tensileStrength" type="text" value="370" size="4" readonly> MPa
+
+<h2>Module de Young</h2>
+<select id="density" onchange="document.getElementById('moduleYoung').value = this.value">
+  <option value="1.4 - 3.1">ABS</option>
+  <option value="3.5">PLA</option>
+  <option value="200" selected>acier</option>
+</select>
+<input id="moduleYoung" type="text" value="370" size="4" readonly> GPa
+
+</div>
+<!-- SECTION *Transmission -->
+<div id="Transmission">
+<h1>Transmission</h1>
+<h2>Comment choisir</h2>
+<p>
+Prérequis: À partir de ce point, le moteur devrait déjà être choisi selon la puissance requise pour déplacer la charge à une certaine vitesse.
+</p>
+<p>
+La première chose à faire est de déterminer la ratio désiré. 
+</p>
+<p>
+Il y a deux inputs: précision et vitesse.
+</p>
+<h2>Les différents types</h2>
+<h2>Calcul de la résolution</h2>
+<p>
+Admettons que mon bras à 15" de reach. Multiplier par 3.1416 multiplier par 2 donne une circonférence de 94.248". Un stepper standard de 200 step par révolution. Avec un ratio de 5, on multiplie par 5 la résolution, donc 1000 step par révolution. Le résultat est 0.094248" de parcourue par révolution.
+</p>
+<p>
+Je veux être capable d'imprimer en 3d avec, c'est un de mes objectifs. Je dois avec une résolution de 0.2 mm ou 0.08" (répétable). Toutefois, cette résolution est requise seulement sur une petite surface de 20 cm X 20 cm. Et la précision du bras rotatif est meilleur devant dans l'axe requis. À 90 degrés, il est au maximum. 20 cm c'est 7.874". 15" - 7.874" nous donne 7.126". Donc on cherche l'angle parcouru pour que le bras soit à 7.126" en y, et non à 15". On l'obtient avec acos(7.126/15) ce qui donne 61.636 deg.
+</p>
+<p>
+On a une résolution de 200 coche par révolution, multiplié par le ratio de 5, donc 1000. 360 deg / 1000 donne 0.36 degrés.
+</p>
+<p>
+Le delta y de 61.636 à 62 degré est de 0.084" (trouvé avec FreeCAD) au lieu de 0.095". OK fuck off ça sert à rien ce que j'ai trouvé comme résolution.
+</p>
+<h2>Calcul de la vitesse</h2>
+</div>
+<!-- SECTION *Électrique -->
+<div id="Électrique">
+<h1>Électrique</h1>
+<h2>Cable carreirs</h2>
+Type de cable carreirs: https://www.cablecarriers.co.in/cable-carriers-and-trollies.html
+</div>
+<!-- SECTION *Caméra -->
+<div id="Camera">
+<h1>Caméra</h1>
+
+<h2>Exemple: Ma machine</h2>
+
+<p>J'ai besoin de:</p>
+<p>Être capable de lire de très 1 po à 8 po à peu près.</p>
+<p>Une source de lumière pour éclairer la vue.</p>
+<p>Un long fil ou un autre raspberry pi pas loin ou le meme raspberry pi sur le bras direct (il communique avec l'arduino par wifi)</p>
+<p>Un champs de vision de combien?</p>
+<p></p>
+
+<h2>Medium</h2>
+
+<h3>Code bar 1d</h3>
+<h3>Code bar 2d</h3>
+<h3>Text</h3>
+J'aimerais beaucoup que le poids puisse être marqué en texte sur le dessus du pot, ça serait important pour le bulk barn.
+<h3>Image</h3>
+
+</div>

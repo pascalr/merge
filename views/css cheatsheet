@@ -1,0 +1,16 @@
+<pre>
+style="transform:rotate(90deg);
+
+h2 {
+  clear: left; /* Pour clear float: left; */
+}
+
+visibility: hidden;
+visibility: visible;
+
+li::before {
+  content: "•"; /* Insert content that looks like bullets */
+  padding-right: 8px;
+  color: blue; /* Or a color you prefer */
+}
+</pre>

@@ -1,0 +1,33 @@
+<!-- SECTION Untitled -->
+<pre>
+path.basename('/foobaz/asdf/quux.html') // returns 'quux.html'
+
+var myDate = new Date(); 
+myDate.getDay() // day of week
+myDate.getDate() // day of month
+myDate.getMonth() // month of year
+myDate.getFullYear() // year
+
+document.getElementById(id).attribute = new value
+element.innerHTML = "New Heading";
+
+var images = document.getElementsByTagName('img'); 
+var images = [...document.getElementsByTagName('img')]
+
+document.getElementById("demo").style.color = "red";
+
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
+function uniqueId(ids) {
+  // In the very rare chance that two ids are the same, get another one
+  const id = uuidv4();
+  return ids[id] ? uniqueId(ids) : id;
+}
+
+
+</pre>

@@ -1,0 +1,44 @@
+<!-- SECTION Untitled -->
+<style>
+body, html {
+  height: 100%;
+}
+body {
+  margin-top: 0px;
+  /*Source: http://www.seekgif.com/free-image/white-abstract-wallpapers-hd-15116.html*/
+  background-image: url("image/white-background.jpeg") !important;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+#icons img {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+</style>
+
+<div id="icons">
+<a href="view?name=Liste d'épicerie"><img class="image2" src="image/1575322767912_image.png" width="64" height="64"></a>
+<a href="view?name=calc"><img class="image2" src="image/calculator.svg" width="64" height="64"></a>
+<a href="view?name=MouseControl"><img src="image/mouse.svg" width="64" height="64"></a>
+<a href="view?name=Mechanical engineering"><img src="image/gears.svg" width="64" height="64"></a>
+<a href="view?name=Ma machine.html"><img src="image/robot_arm.svg" width="64" height="64"></a>
+<a href="view?name=publish"><img src="image/internet.svg" width="64" height="64"></a>
+<a href="view?name=achats"><img src="image/money.svg" width="64" height="64"></a>
+
+<br/>
+
+<a href="/?f=todo"><img src="image/1575399072750_image.png"  width="64" height="64"></a>
+<a href="/?f=music"><img src="image/1575399501187_image.png" width="64" height="64"></a>
+<a href="/?f=livre"><img src="image/1575399508109_image.png" width="64" height="64"></a>
+<a href="/?f=accords"><img src="image/1575399516179_image.png" width="64" height="64"></a>
+<a href="/?f=recette"><img src="image/1575399525010_image.png" width="64" height="64"></a>
+
+<br/>
+
+<a href="https://news.ycombinator.com/"><img src="image/1575399678859_image.png" width="64" height="64"></a>
+<a href="https://meteo.gc.ca/city/pages/qc-136_metric_f.html"><img src="image/1578091188486_image.png" width="64" height="64"></a>
+
+<br/>
+</div>

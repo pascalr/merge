@@ -1,0 +1,61 @@
+<!-- SECTION Liste a acheter -->
+<h1>Achats</h1>
+<h2>Liste</h2>
+
+<pre>
+Internet:
+
+Des moteurs NEMA23 pour les axes X et theta aussi. Sinon je ne serai même pas
+capable de prendre des ingrédients (aucune force latéral sinon mon moteur ne tiendra pas)
+Ou bien un plus grand ratio. C'est l'axe theta surtout le problème...
+
+Addisson électronique:
+Spacer mount screw. (standoff)
+40 mm 5V fan (pour raspberry pi 4)
+
+Boulons de l'estrie:
+(noir idéalement)
+lock washer M4
+set screw M4
+(20) M3 8mm socket cap (pk déjà?)
+M2.5mm
+M2mm
+4Gx6mm
+
+Bearing general [Wellington]:
+- bearing retainer ring
+- pillow block?
+
+Canac:
+Petites marettes.
+Vis à bois 1.25"
+Lame scie a metal
+Penture pour porte
+
+Acheter #8-32 X 0.75"
+Acheter #10-24
+Acheter petite quicaillerie, ecrous #6-32
+Acheter melamine
+Acheter split pin?
+Ca pourrait comme être des sapin de plastique comme pour les tiroirs pour séparer les pots dans d    es rangées.
+Nut de nylon pour pince haut bas?
+Acheter circlip?
+Plexiglass pour enclosure de mon imprimante 3d et pour mes portes de ma machine
+
+Acier Lennox:
+[Tôle à partir de gauge 22]
+
+Autres:
+Petit escabot
+
+</pre>
+<!-- SECTION *Source -->
+<h2>Online</h2>
+
+<pre>
+Bearings: https://www.bcprecision.com/
+R6: https://www.bcprecision.com/collections/ball-bearings/products/r6-2rs-8x22x7-sealed-greased-miniature-ball-bearings?variant=31339783625
+608: https://www.bcprecision.com/collections/ball-bearings/products/608-2rs-8x22x7-sealed-greased-miniature-ball-bearings?variant=28520658633
+</pre>
+<!-- SECTION Historique -->
+Historique: Est-ce que ça serait possible de scanner les factures facilement? Plus besoin de garder les original. S'il y a un problème, tu imprimes la facture. Eux de toute façon ce qu'il regarde c'est que le code barre je crois qu'ils scan.
