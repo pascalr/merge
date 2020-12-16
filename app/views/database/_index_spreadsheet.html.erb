@@ -3,16 +3,17 @@
 <%
   @headers = @columns.map {|(k,v)| k }
   @data = []
-  @model.all.each do |m|
+  @model.order(:id).all.each do |m|
     @data << @columns.map {|(k,v)| m.public_send(k).to_s }
   end
-  100.times do
-    @data << @columns.map {|(k,v)| nil }
-  end
+  @data << @columns.map {|(k,v)| nil }
+  #100.times do
+  #  @data << @columns.map {|(k,v)| nil }
+  #end
 %>
 
-<button id='save_spreadsheet'>Save</button>
-
 <div id="example" data-spreadsheetheaders="<%= @headers.to_json %>" data-spreadsheettablename="<%= @model.table_name %>" data-spreadsheetmodel="<%= @model.name.downcase %>" data-spreadsheetvalues="<%= @data.to_json %>"></div>
+
+<button id='add_row_spreadsheet'>Add</button>
 
 <%= javascript_pack_tag 'spreadsheet' %>

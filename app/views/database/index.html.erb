@@ -12,7 +12,8 @@
 
 <h1><%= @model.name %> database</h1>
 
-<%=
+<%= render partial: 'index_spreadsheet' %>
+<%#
   case params[:template]
   when 'editing' then
     render partial: 'index_edit'

@@ -80,7 +80,7 @@ class DatabaseController < ApplicationController
   def destroy
     record = @model.find(params[:id])
     record.destroy!
-    redirect_to "/#{record.class.table_name}"
+    redirect_to polymorphic_path(@model, no_redirect: params[:no_redirect])
   end
 
   def show_table
