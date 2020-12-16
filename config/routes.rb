@@ -30,7 +30,6 @@ Rails.application.routes.draw do
   #post '/editor/create', to: 'editor#create', as: 'create_view'
 
   get '/database', to: 'database#dashboard', as: 'database'
-  post '/database/save_all', to: 'database#save_all', as: 'database_save_all'
 
   lazy_resources :contacts
   lazy_resources :tasks
