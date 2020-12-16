@@ -61,7 +61,8 @@ class DatabaseController < ApplicationController
     model_params = params.require(record.model_name.param_key.to_sym)
     record.update!(model_params)
     #record.update!(record.permit(model_params))
-    redirect_to request.referrer
+    #redirect_to request.referrer
+    render :json => record
     #redirect_to record TODO: If request.referrer is edit_path, than render show
   end
 
@@ -72,7 +73,8 @@ class DatabaseController < ApplicationController
     # I broke database record, no more scope
     record = @model.new(model_params)
     record.save!
-    redirect_to request.referrer
+    render :json => record
+    #redirect_to request.referrer
     # TODO: Show errors on save
     #redirect_to record TODO: If request.referrer is new_path, than render show
   end
@@ -80,7 +82,8 @@ class DatabaseController < ApplicationController
   def destroy
     record = @model.find(params[:id])
     record.destroy!
-    redirect_to polymorphic_path(@model, no_redirect: params[:no_redirect])
+    render plain: "OK"
+    #redirect_to polymorphic_path(@model, no_redirect: params[:no_redirect]), method: :get
   end
 
   def show_table

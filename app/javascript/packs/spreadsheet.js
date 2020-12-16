@@ -35,6 +35,8 @@ const hot = new Handsontable(container, {
     console.log("Source: ", source)
 
     changes.forEach(([row, prop, oldValue, newValue]) => {
+      if (prop == 0) {return; /* Ignore anything related to the id. */ }
+
       let id = hot.getDataAtCell(row, 0);
       let columnName = headers[prop]
       if (id == null) {
@@ -46,10 +48,9 @@ const hot = new Handsontable(container, {
             authenticity_token: $('[name="csrf-token"]')[0].content,
             [model]: {[columnName]: newValue}
           },
-          success: function (data) {console.log("success data: ", data); return false},
-          error: function (data) {console.log("error data: ", data); return false}
+          success: function (data) {console.log("success insert data: ", data); hot.setDataAtCell(row, 0, data.id); return false},
+          error: function (data) {console.log("error insert data: ", data); return false}
         })
-        hot.setDataAtCell(row, 0, 123);
       } else {
         let allNull = false
         if (newValue == null == newValue == "") {
