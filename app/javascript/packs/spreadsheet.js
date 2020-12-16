@@ -18,6 +18,44 @@ let tablename = container.dataset.spreadsheettablename
 let model = container.dataset.spreadsheetmodel
 let columns = headers.map((h) => ({readOnly: h == "id" || h == "created_at" || h == "updated_at"}))
 
+function createModel(row, column, value) {
+  $.ajax({
+    type: "POST",
+    url: "/" + tablename,
+    data: {
+      authenticity_token: $('[name="csrf-token"]')[0].content,
+      [model]: {[column]: value}
+    },
+    success: function (data) {console.log("success insert data: ", data); hot.setDataAtCell(row, 0, data.id); return false},
+    error: function (data) {console.log("error insert data: ", data); return false}
+  })
+}
+
+function updateModel(id, column, value) {
+  $.ajax({
+    type: "PATCH",
+    url: "/" + tablename + "/" + id,
+    data: {
+      authenticity_token: $('[name="csrf-token"]')[0].content,
+      [model]: {[column]: value}
+    },
+    success: function (data) {console.log("success data: ", data); return false},
+    error: function (data) {console.log("error data: ", data); return false}
+  })
+}
+
+function deleteModel(id) {
+  $.ajax({
+    type: "DELETE",
+    url: "/" + tablename + "/" + id + "?no_redirect=true",
+    data: {
+      authenticity_token: $('[name="csrf-token"]')[0].content,
+    },
+    success: function (data) {console.log("success data: ", data); return false},
+    error: function (data) {console.log("error data: ", data); return false}
+  })
+}
+
 const hot = new Handsontable(container, {
   data: data,
   rowHeaders: true,
@@ -40,17 +78,7 @@ const hot = new Handsontable(container, {
       let id = hot.getDataAtCell(row, 0);
       let columnName = headers[prop]
       if (id == null) {
-        // Create model
-        $.ajax({
-          type: "POST",
-          url: "/" + tablename,
-          data: {
-            authenticity_token: $('[name="csrf-token"]')[0].content,
-            [model]: {[columnName]: newValue}
-          },
-          success: function (data) {console.log("success insert data: ", data); hot.setDataAtCell(row, 0, data.id); return false},
-          error: function (data) {console.log("error insert data: ", data); return false}
-        })
+        createModel(row, columnName, newValue)
       } else {
         let allNull = false
         if (newValue == null == newValue == "") {
@@ -63,29 +91,10 @@ const hot = new Handsontable(container, {
             }
           }
         }
-        // Delete model
         if (allNull) {
-          $.ajax({
-            type: "DELETE",
-            url: "/" + tablename + "/" + id + "?no_redirect=true",
-            data: {
-              authenticity_token: $('[name="csrf-token"]')[0].content,
-            },
-            success: function (data) {console.log("success data: ", data); return false},
-            error: function (data) {console.log("error data: ", data); return false}
-          })
-        // Update model
+          deleteModel(id)
         } else {
-          $.ajax({
-            type: "PATCH",
-            url: "/" + tablename + "/" + id,
-            data: {
-              authenticity_token: $('[name="csrf-token"]')[0].content,
-              [model]: {[columnName]: newValue}
-            },
-            success: function (data) {console.log("success data: ", data); return false},
-            error: function (data) {console.log("error data: ", data); return false}
-          })
+          updateModel(id, columnName, newValue)
         }
       }
       // TODO: Set updated_at and created_at (non fuck off je ne mettrai n'afficherai tout simplement pas ces valeurs)
