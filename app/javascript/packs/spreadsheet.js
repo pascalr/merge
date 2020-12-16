@@ -1,7 +1,8 @@
 require('jquery')
 
 import Handsontable from "handsontable";
-import 'handsontable/dist/handsontable.full.css';
+import 'handsontable/dist/handsontable.full';
+//import 'handsontable/dist/handsontable.full.css';
 
 //const data = [
 //  ['', 'Tesla', 'Volvo', 'Toyota', 'Ford'],
