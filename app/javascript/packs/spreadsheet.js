@@ -19,16 +19,29 @@ let tablename = container.dataset.spreadsheettablename
 let model = container.dataset.spreadsheetmodel
 let columns = headers.map((h) => ({readOnly: h == "id" || h == "created_at" || h == "updated_at"}))
 
-function createModel(row, column, value) {
+function printErrors(errors) {
+  let msg = '<ul>'
+  errors.forEach(error => {
+    msg += '<li>'
+    msg += error
+    msg += '</li>'
+  })
+  msg += '</ul>'
+  toastr['error'](msg)
+}
+
+//function createModel(row, column, value) {
+function createModel(row, record) {
+  //[model]: {[column]: value}
   $.ajax({
     type: "POST",
     url: "/" + tablename,
     data: {
       authenticity_token: $('[name="csrf-token"]')[0].content,
-      [model]: {[column]: value}
+      [model]: record
     },
     success: function (data) {console.log("success insert data: ", data); hot.setDataAtCell(row, 0, data.id); return false},
-    error: function (data) {console.log("error insert data: ", data); return false}
+    error: function (data) {console.log("error insert data: ", data); printErrors(data.responseJSON); return false}
   })
 }
 
@@ -57,6 +70,15 @@ function deleteModel(id) {
   })
 }
 
+function makeModelFromRow(hot, row) {
+  let obj = {}
+  headers.forEach((h,i) => {
+    if (h == "id" || h == "created_at" || h == "updated_at") { return; }
+    obj[h] = hot.getDataAtCell(row, i)
+  })
+  return obj
+}
+
 const hot = new Handsontable(container, {
   data: data,
   rowHeaders: true,
@@ -79,7 +101,8 @@ const hot = new Handsontable(container, {
       let id = hot.getDataAtCell(row, 0);
       let columnName = headers[prop]
       if (id == null) {
-        createModel(row, columnName, newValue)
+        createModel(row, makeModelFromRow(hot, row))
+        //createModel(row, columnName, newValue)
       } else {
         let allNull = false
         if (newValue == null == newValue == "") {

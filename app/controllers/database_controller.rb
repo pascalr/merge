@@ -72,8 +72,23 @@ class DatabaseController < ApplicationController
     model_params = params.require(tmp.model_name.param_key.to_sym)
     # I broke database record, no more scope
     record = @model.new(model_params)
-    record.save!
-    render :json => record
+
+    #respond_to do |format|
+    #  if @detected_code.save
+    #    format.html { redirect_to @detected_code, notice: 'Detected code was successfully created.' }
+    #    format.json { render :show, status: :created, location: @detected_code }
+    #  else
+    #    format.html { render :new }
+    #    format.json { render json: @detected_code.errors, status: :unprocessable_entity }
+    #  end
+    #end
+
+    if record.save
+      render :json => record
+    else
+      render json: record.errors.full_messages, status: :unprocessable_entity
+      #render json: record.errors, status: :unprocessable_entity
+    end
     #redirect_to request.referrer
     # TODO: Show errors on save
     #redirect_to record TODO: If request.referrer is new_path, than render show
