@@ -14,10 +14,10 @@ import 'handsontable/dist/handsontable.full';
 const container = document.getElementById('example');
 
 let data = JSON.parse(container.dataset.spreadsheetvalues)
-let headers = JSON.parse(container.dataset.spreadsheetheaders)
+let headers = JSON.parse(container.dataset.spreadsheetheaders).filter(h => !(h == "created_at" || h == "updated_at"))
 let tablename = container.dataset.spreadsheettablename
 let model = container.dataset.spreadsheetmodel
-let columns = headers.map((h) => ({readOnly: h == "id" || h == "created_at" || h == "updated_at"}))
+let columns = headers.map((h) => ({readOnly: h == "id"}))
 
 function printErrors(errors) {
   if (!errors) {return;}
@@ -90,6 +90,14 @@ const hot = new Handsontable(container, {
   allowInsertRow: true,
   autoInsertRow: true,
   contextMenu: true,
+  manualColumnMove: true,
+  manualColumnResize: true,
+  modifyColWidth: function(width, col){
+    window.col = col
+    if(width > 1000){
+      return 1000
+    }
+  },
   licenseKey: 'non-commercial-and-evaluation',
   afterChange: function (changes, source) {
 
@@ -127,3 +135,8 @@ const hot = new Handsontable(container, {
     });
   }
 });
+
+document.getElementById('add_row_spreadsheet').addEventListener('click', function() {
+    var col = hot.countRows();
+    hot.alter('insert_row', col, 1);
+  })
