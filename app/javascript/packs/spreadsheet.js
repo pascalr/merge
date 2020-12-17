@@ -20,6 +20,7 @@ let model = container.dataset.spreadsheetmodel
 let columns = headers.map((h) => ({readOnly: h == "id" || h == "created_at" || h == "updated_at"}))
 
 function printErrors(errors) {
+  if (!errors) {return;}
   let msg = '<ul>'
   errors.forEach(error => {
     msg += '<li>'
