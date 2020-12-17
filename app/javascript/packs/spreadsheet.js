@@ -40,6 +40,7 @@ function createModel(row, record) {
       authenticity_token: $('[name="csrf-token"]')[0].content,
       [model]: record
     },
+    async: false,
     success: function (data) {console.log("success insert data: ", data); hot.setDataAtCell(row, 0, data.id); return false},
     error: function (data) {console.log("error insert data: ", data); printErrors(data.responseJSON); return false}
   })
@@ -121,11 +122,7 @@ const hot = new Handsontable(container, {
           updateModel(id, columnName, newValue)
         }
       }
-      // TODO: Set updated_at and created_at (non fuck off je ne mettrai n'afficherai tout simplement pas ces valeurs)
-      console.log("tablename: ", tablename);
-      console.log("id: ", id);
-      console.log("columnName: ", columnName);
-      console.log("value: ", newValue);
+      console.log("row: ", row);
     });
   }
 });
