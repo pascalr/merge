@@ -3,10 +3,12 @@
 <%
   @headers = @columns.map {|(k,v)| k }
   @data = []
-  @model.order(:id).all.each do |m|
+  @records = @model.order(:id).all
+  @records.each do |m|
     @data << @columns.map {|(k,v)| m.public_send(k).to_s }
   end
   @data << @columns.map {|(k,v)| nil }
+  #@edit_links = @records.map {|m| link_to m.id, polymorphic_path}
   #100.times do
   #  @data << @columns.map {|(k,v)| nil }
   #end

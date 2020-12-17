@@ -81,6 +81,11 @@ function makeModelFromRow(hot, row) {
   return obj
 }
 
+//function idRenderer(instance, td, row, col, prop, value, cellProperties) {
+//  val = Handsontable.helper.sanitize(value)
+//  td.innerHTML = '<a href="'+val+'"</a>';
+//}
+
 const hot = new Handsontable(container, {
   data: data,
   rowHeaders: true,
