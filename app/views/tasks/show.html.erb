@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @task.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= simple_format @task.description %>
+</p>
+
+<p>
+  <strong>Completed at:</strong>
+  <%= @task.completed_at %>
+</p>
+
+<p>
+  <strong>Priority:</strong>
+  <%= @task.priority %>
+</p>
+
+<%= link_to 'Complete', complete_task_path(@task), method: :patch %> |
+<%= link_to 'Destroy', @task, method: :delete, data: { confirm: 'Are you sure?' } %> |
+<%= link_to 'Edit', edit_task_path(@task) %> |
+<%= link_to 'Back', tasks_path %>
