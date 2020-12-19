@@ -45,6 +45,7 @@ Rails.application.routes.draw do
   lazy_resources :ideas
   lazy_resources :bookmarks
   lazy_resources :musics
+  lazy_resources :milestones
 
   post '/db/create_table', to: 'apps#create_table', as: 'db_create_table'
   post '/db/:model_name/create_column', to: 'apps#create_column', as: 'db_create_column'
