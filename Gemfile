@@ -9,6 +9,9 @@ gem "simple_calendar", "~> 2.0"
 # For authentication
 gem 'devise'
 
+# For images in Trix editor
+gem 'image_processing', '~> 1.2'
+
 # To manage data
 # gem 'rails_admin', '~> 2.0'
 
