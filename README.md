@@ -1,5 +1,11 @@
 INSTALL:
 
+sudo apt-get update
+sudo apt-get install libpq-dev postgresql postgresql-contrib
+sudo service postgresql start
+sudo -u postgres createuser --interactive
+=> linux username, y
+
 yarn install handsontable
 
 # README

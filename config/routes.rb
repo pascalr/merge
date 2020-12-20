@@ -12,6 +12,7 @@ end
 
 Rails.application.routes.draw do
 
+  resources :documents
   devise_for :users
   app 'desktop'
   app 'gallery'
