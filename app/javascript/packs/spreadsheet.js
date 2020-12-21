@@ -91,7 +91,6 @@ const hot = new Handsontable(container, {
   rowHeaders: true,
   colHeaders: headers,
   columns: columns,
-  fixedRowsTop: 1,
   allowInsertRow: true,
   autoInsertRow: true,
   contextMenu: true,
