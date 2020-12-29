@@ -1,3 +1,30 @@
+
+app.get('/resizeImages', function(req,res) {
+  exec("find ../recettesPascal/images -iname '*.jpg' -exec convert \\{} -verbose -resize 400x400\\> \\{} \\;", function(err, stdout, stderr) {
+  })
+  exec("find ../recettesPascal/images -iname '*.png' -exec convert \\{} -verbose -resize 400x400\\> \\{} \\;", function(err, stdout, stderr) {
+  })
+  res.end('done')
+})
+
+COMMANDS = {
+  ls: {cmd: "ls -la"},
+  firefox: {cmd: "firefox"},
+  resetSound: {cmd: "pulseaudio -k && sudo alsa force-reload"},
+  dota2: {cmd: "steam steam://rungameid/570"},
+  civ6: {cmd: "steam steam://rungameid/289070"},
+  csgo: {cmd: "steam steam://rungameid/730"},
+  chromium: {cmd: "chromium-browser"},
+  freecad: {cmd: "freecad"},
+  marioKart: {cmd: "dolphin-emu --exec='/home/pascalr/games/Mario Kart Wii.wbfs'"},
+  // FIXME: SANITIZE INPUT
+  setVolume: {fn: (query) => (`for SINK in \`pacmd list-sinks | grep 'index:' | cut -b12-\`
+do
+  pacmd set-sink-volume $SINK ${query.volume}
+done`)},
+  arduino: {fn: (query) => (`echo ${query.cmd} > /dev/ttyACM0`)}
+}
+
 INSTALL:
 
 sudo apt-get update
