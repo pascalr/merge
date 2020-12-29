@@ -45,11 +45,23 @@ class DatabaseController < ApplicationController
   end
   
   def edit
-    @record = @model.find(params[:id])
+    # FIXME: Check for other extensions latter
+    if not params[:no_redirect] and Rails.root.join('app').join('views').join(@model.table_name).join("edit.html.erb").exist?
+      instance_variable_set("@#{@model.name.downcase}", @model.find(params[:id]))
+      render "#{@model.table_name}/edit"
+    else
+      @record = @model.find(params[:id])
+    end
   end
 
   def new
-    @record = @model.new
+    # FIXME: Check for other extensions latter
+    if not params[:no_redirect] and Rails.root.join('app').join('views').join(@model.table_name).join("new.html.erb").exist?
+      instance_variable_set("@#{@model.name.downcase}", @model.new)
+      render "#{@model.table_name}/new"
+    else
+      @record = @model.new
+    end
   end
     
   # FIXME: Test the the find model name is good
@@ -62,12 +74,18 @@ class DatabaseController < ApplicationController
     
     #record.update!(record.permit(model_params))
     #redirect_to request.referrer
-    if record.update(model_params)
-      render :json => record
-    else
-      render json: record.errors.full_messages, status: :unprocessable_entity
-      #render json: record.errors, status: :unprocessable_entity
+
+    respond_to do |format|
+      if record.update(model_params)
+        format.html { redirect_to record, notice: 'Record was successfully updated.' }
+        format.json { render json: record }
+      else
+        format.html { render :edit }
+        format.json { render json: record.errors.full_messages, status: :unprocessable_entity }
+      end
     end
+
+    #render json: record.errors, status: :unprocessable_entity
     #redirect_to record TODO: If request.referrer is edit_path, than render show
   end
 
@@ -78,22 +96,17 @@ class DatabaseController < ApplicationController
     # I broke database record, no more scope
     record = @model.new(model_params)
 
-    #respond_to do |format|
-    #  if @detected_code.save
-    #    format.html { redirect_to @detected_code, notice: 'Detected code was successfully created.' }
-    #    format.json { render :show, status: :created, location: @detected_code }
-    #  else
-    #    format.html { render :new }
-    #    format.json { render json: @detected_code.errors, status: :unprocessable_entity }
-    #  end
-    #end
-
-    if record.save
-      render :json => record
-    else
-      render json: record.errors.full_messages, status: :unprocessable_entity
-      #render json: record.errors, status: :unprocessable_entity
+    respond_to do |format|
+      if record.save
+        format.html { redirect_to record, notice: 'Record was successfully created.' }
+        format.json { render json: record }
+      else
+        format.html { render :new }
+        format.json { render json: record.errors.full_messages, status: :unprocessable_entity }
+      end
     end
+
+    #render json: record.errors, status: :unprocessable_entity
     #redirect_to request.referrer
     # TODO: Show errors on save
     #redirect_to record TODO: If request.referrer is new_path, than render show
@@ -102,7 +115,12 @@ class DatabaseController < ApplicationController
   def destroy
     record = @model.find(params[:id])
     record.destroy!
-    render plain: "OK"
+
+    # TODO: Handle destroy error
+    respond_to do |format|
+      format.html { redirect_to polymorphic_path(@model), notice: 'Record was successfully destroyed.' }
+      format.json { render plain: "OK" }
+    end
     #redirect_to polymorphic_path(@model, no_redirect: params[:no_redirect]), method: :get
   end
 
