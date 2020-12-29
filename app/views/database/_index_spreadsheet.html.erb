@@ -1,29 +1,30 @@
 <h2>Spreadsheet</h2>
 
 <%
-  @headers = @columns.map {|(k,v)| k }
+  def get_association(model, name)
+    as = model.reflect_on_all_associations.select {|a| a.macro == :belongs_to and a.foreign_key.to_s == name.to_s}
+    as.size == 1 ? as.first : nil
+  end
+
+  @headers = @columns.map {|(name,type)| name }
   @data = []
   @records = @model.order(:id).all
   @records.each do |m|
-    @data << @columns.map {|(k,v)| m.public_send(k).to_s }
+    @data << @columns.map {|(name,type)|
+      a = get_association(@model, name)
+      next m.public_send(a.name).to_param if a
+      m.public_send(name).to_s
+    }
   end
-  @cols = @columns.map {|(name,type)|
-    a = @model.reflect_on_all_associations.select {|a| a.macro == :belongs_to and a.foreign_key.to_s == name.to_s}
-    if a.size == 1
-      a = a.first
-      {type: 'dropdown', source: a.klass.all.map(&:to_param)}
-    elsif type == :integer or type == :float
-      {type: 'numeric'}
-    elsif type == :date or type == :datetime
-      {type: 'date'}
-    elsif type == :time
-      {type: 'time'}
-    elsif type == :boolean
-      {type: 'checkbox'}
-    #{data: "isActive", type: 'checkbox'},
-    else
-      {readOnly: name.to_s == "id"}
-    end
+  @cols = @columns.map do |(name,type)|
+    a = get_association(@model, name)
+    next {type: 'dropdown', source: a.klass.all.map(&:to_param)} if a
+    next {type: 'numeric'} if type == :integer or type == :float
+    next {type: 'date'} if type == :date or type == :datetime
+    next {type: 'time'} if type == :time
+    next {type: 'checkbox'} if type == :boolean
+    next {readOnly: true} if name.to_s == "id"
+    {}
     #autocomplete for Handsontable.cellTypes.autocomplete
     #checkbox for Handsontable.cellTypes.checkbox
     #date for Handsontable.cellTypes.date
@@ -33,7 +34,7 @@
     #password for Handsontable.cellTypes.password
     #text for Handsontable.cellTypes.text
     #time for Handsontable.cellTypes.time
-  }
+  end 
   @data << @columns.map {|(k,v)| nil }
   #@edit_links = @records.map {|m| link_to m.id, polymorphic_path}
   #100.times do
