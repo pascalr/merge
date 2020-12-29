@@ -12,7 +12,6 @@ end
 
 Rails.application.routes.draw do
 
-  resources :documents
   devise_for :users
   app 'desktop'
   app 'gallery'
@@ -32,6 +31,7 @@ Rails.application.routes.draw do
 
   get '/database', to: 'database#dashboard', as: 'database'
 
+  lazy_resources :documents
   lazy_resources :folders
   lazy_resources :contacts
   lazy_resources :tasks

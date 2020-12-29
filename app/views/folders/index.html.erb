@@ -1,0 +1,15 @@
+<h1>My documents</h1>
+
+<h2>Top level folders</h2>
+
+<% Folder.where(folder_id: nil).each do |folder| %>
+  <%= link_to folder.name, folder %><br>
+<% end %>
+<%= link_to "Add folder", new_folder_path %>
+
+<h2>Top level documents</h2>
+
+<% Document.where(folder_id: nil).each do |doc| %>
+  <%= link_to doc.name, doc %><br>
+<% end %>
+<%= link_to "Add document", new_document_path %>
