@@ -16,9 +16,13 @@
     <%= form.text_field :name %>
   </div>
 
+  <div id="rich_text_area">
   <%= form.rich_text_area :content %>
+  </div>
 
   <div class="actions">
     <%= form.submit %>
   </div>
 <% end %>
+
+<%= javascript_pack_tag :trix_editor_more %>
