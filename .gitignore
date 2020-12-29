@@ -9,6 +9,8 @@
 
 latest.dump
 
+*.swp
+
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*

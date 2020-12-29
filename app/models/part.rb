@@ -7,6 +7,10 @@ class Part < ApplicationRecord
   has_many :purchases
 
   accepts_nested_attributes_for :part_list_items
+  
+  def to_param
+    "#{id}-#{name}"
+  end
 
   def parts_where_used
     Part.joins(:part_list_items).where(:part_list_items => {item_id: id}).all

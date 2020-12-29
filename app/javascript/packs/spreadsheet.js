@@ -18,7 +18,7 @@ let headers = JSON.parse(container.dataset.spreadsheetheaders).filter(h => !(h =
 let tablename = container.dataset.spreadsheettablename
 let model = container.dataset.spreadsheetmodel
 //let columns = headers.map((h) => ({readOnly: h == "id"}))
-let columns = container.dataset.spreadsheetcols
+let columns = JSON.parse(container.dataset.spreadsheetcols)
 
 function printErrors(errors) {
   if (!errors) {return;}

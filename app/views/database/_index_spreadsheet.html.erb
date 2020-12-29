@@ -10,9 +10,14 @@
   @cols = @columns.map {|(name,type)|
     a = @model.reflect_on_all_associations.select {|a| a.macro == :belongs_to and a.foreign_key.to_s == name.to_s}
     if a.size == 1
-      {type: 'dropdown', source: ['yellow', 'red', 'orange', 'green', 'blue', 'gray', 'black', 'white']}
+      a = a.first
+      {type: 'dropdown', source: a.klass.all.map(&:to_param)}
     elsif type == :integer or type == :float
       {type: 'numeric'}
+    elsif type == :date or type == :datetime
+      {type: 'date'}
+    elsif type == :time
+      {type: 'time'}
     elsif type == :boolean
       {type: 'checkbox'}
     #{data: "isActive", type: 'checkbox'},
