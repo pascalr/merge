@@ -59,10 +59,15 @@ class DatabaseController < ApplicationController
     record = @model.find(params[:id])
     ActionController::Parameters.permit_all_parameters = true
     model_params = params.require(record.model_name.param_key.to_sym)
-    record.update!(model_params)
+    
     #record.update!(record.permit(model_params))
     #redirect_to request.referrer
-    render :json => record
+    if record.update(model_params)
+      render :json => record
+    else
+      render json: record.errors.full_messages, status: :unprocessable_entity
+      #render json: record.errors, status: :unprocessable_entity
+    end
     #redirect_to record TODO: If request.referrer is edit_path, than render show
   end
 

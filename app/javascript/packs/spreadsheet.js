@@ -17,7 +17,8 @@ let data = JSON.parse(container.dataset.spreadsheetvalues)
 let headers = JSON.parse(container.dataset.spreadsheetheaders).filter(h => !(h == "created_at" || h == "updated_at"))
 let tablename = container.dataset.spreadsheettablename
 let model = container.dataset.spreadsheetmodel
-let columns = headers.map((h) => ({readOnly: h == "id"}))
+//let columns = headers.map((h) => ({readOnly: h == "id"}))
+let columns = container.dataset.spreadsheetcols
 
 function printErrors(errors) {
   if (!errors) {return;}
@@ -56,7 +57,7 @@ function updateModel(id, column, value) {
       [model]: {[column]: value}
     },
     success: function (data) {console.log("success data: ", data); return false},
-    error: function (data) {console.log("error data: ", data); return false}
+    error: function (data) {console.log("error update data: ", data); printErrors(data.responseJSON); return false}
   })
 }
 
