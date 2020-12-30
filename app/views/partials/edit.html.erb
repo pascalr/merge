@@ -35,13 +35,7 @@
     </div>
   </div>
   <div class="col">
-    <div class="rightside" style="white-space: pre-wrap;"><%=
-        begin
-          render inline: @partial.content
-        rescue => e
-          debug e
-        end
-      %></div>
+    <div class="rightside" style="white-space: pre-wrap;"><div id="partial-preview"></div></div>
   </div>
 </div>
 
@@ -51,6 +45,14 @@
   function inputChanged(e) {
     field = document.getElementById('content-field')
     field.value = e.target.innerText
+    preview = document.getElementById('partial-preview')
+    preview.innerHTML = Eta.render(e.target.innerText)
   }
+
+  document.addEventListener("DOMContentLoaded", function(event) { 
+    field = document.getElementById('content-field')
+    preview = document.getElementById('partial-preview')
+    preview.innerHTML = Eta.render(field.value)
+  })
 
 </script>

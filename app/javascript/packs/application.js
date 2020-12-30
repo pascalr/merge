@@ -25,3 +25,5 @@ import "../stylesheets/application"
 
 global.Trix = require("trix")
 require("@rails/actiontext")
+
+global.Eta = require("eta")
