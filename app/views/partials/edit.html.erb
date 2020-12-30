@@ -1,6 +1,56 @@
 <h1>Editing Partial</h1>
 
-<%= render 'form', partial: @partial %>
+<div id="partial-id" hidden><%= @partial.id %></div>
 
-<%= link_to 'Show', @partial %> |
 <%= link_to 'Back', partials_path %>
+    
+<% if @partial.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@partial.errors.count, "error") %> prohibited this partial from being saved:</h2>
+
+    <ul>
+      <% @partial.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with(model: @partial, local: true) do |form| %>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+  <br><br>
+  <%= form.hidden_field :content, id: 'content-field' %>
+  
+  <div class="field" style="text-align: center;">
+    <%= form.text_field :name %>
+  </div>
+<% end %>
+
+<div class="row">
+  <div class="col">
+    <div class="leftside">
+      <div id="editable-partial" contenteditable="true" style="white-space: pre-wrap;"><%= @partial.content %></div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="rightside" style="white-space: pre-wrap;"><%=
+        begin
+          render inline: @partial.content
+        rescue => e
+          debug e
+        end
+      %></div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('editable-partial').addEventListener('input', inputChanged);
+  
+  function inputChanged(e) {
+    field = document.getElementById('content-field')
+    field.value = e.target.innerText
+  }
+
+</script>

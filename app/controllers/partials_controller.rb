@@ -10,6 +10,7 @@ class PartialsController < ApplicationController
   # GET /partials/1
   # GET /partials/1.json
   def show
+    render inline: @partial.content
   end
 
   # GET /partials/new
@@ -28,10 +29,10 @@ class PartialsController < ApplicationController
 
     respond_to do |format|
       if @partial.save
-        format.html { redirect_to @partial, notice: 'Partial was successfully created.' }
-        format.json { render :show, status: :created, location: @partial }
+        format.html { redirect_to edit_partial_path(@partial), notice: 'Partial was successfully created.' }
+        format.json { render :edit, status: :created, location: @partial }
       else
-        format.html { render :new }
+        format.html { render :index }
         format.json { render json: @partial.errors, status: :unprocessable_entity }
       end
     end
@@ -43,8 +44,8 @@ class PartialsController < ApplicationController
     respond_to do |format|
       logger.info "Update: format: #{request.format}"
       if @partial.update(partial_params)
-        format.html { redirect_to @partial, notice: 'Partial was successfully updated.' }
-        format.json { render :show, status: :ok, location: @partial }
+        format.html { redirect_to edit_partial_path(@partial), notice: 'Partial was successfully updated.' }
+        format.json { render :edit, status: :ok, location: @partial }
       else
         format.html { render :edit }
         format.json { render json: @partial.errors, status: :unprocessable_entity }

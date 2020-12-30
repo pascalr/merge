@@ -1,3 +1,9 @@
+Unfortunately, the view is rendered server side (ruby). It could be in real time if the view was rendered in the client side (js).
+
+But then how to use the database?
+
+I don't know. Maybe it's fine like this. And it can be real time was ran locally. Then there could be something to sync the databases.
+
 TODO: Add a minimum inactive delay before update partial. So not updating for nothing at every keystroke when writing.
 
 Also, when editing, don't send the whole document everytime. Only changes.
