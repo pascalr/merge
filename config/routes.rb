@@ -32,6 +32,8 @@ Rails.application.routes.draw do
 
   get '/database', to: 'database#dashboard', as: 'database'
 
+  lazy_resources :phases
+  lazy_resources :hypotheses
   lazy_resources :documents
   lazy_resources :folders
   lazy_resources :contacts

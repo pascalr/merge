@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_30_034111) do
+ActiveRecord::Schema.define(version: 2020_12_30_145401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,6 +92,14 @@ ActiveRecord::Schema.define(version: 2020_12_30_034111) do
     t.index ["folder_id"], name: "index_folders_on_folder_id"
   end
 
+  create_table "hypotheses", force: :cascade do |t|
+    t.string "name"
+    t.float "value"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "ideas", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -147,6 +155,14 @@ ActiveRecord::Schema.define(version: 2020_12_30_034111) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "name"
+  end
+
+  create_table "phases", force: :cascade do |t|
+    t.string "name"
+    t.float "nb_months"
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "purchases", force: :cascade do |t|

@@ -1,3 +1,7 @@
+TODO: Allow a lot of templating engine. Currently I am only rendering server side (erb), but latter render client side.
+Client side rendering allows for realtime updating previews.
+See: https://expressjs.com/en/resources/template-engines.html
+
 Unfortunately, the view is rendered server side (ruby). It could be in real time if the view was rendered in the client side (js).
 
 But then how to use the database?

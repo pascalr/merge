@@ -37,7 +37,7 @@ function createModel(row, record) {
   //[model]: {[column]: value}
   $.ajax({
     type: "POST",
-    url: "/" + tablename,
+    url: "/" + tablename + ".json",
     data: {
       authenticity_token: $('[name="csrf-token"]')[0].content,
       [model]: record
@@ -51,7 +51,7 @@ function createModel(row, record) {
 function updateModel(id, column, value) {
   $.ajax({
     type: "PATCH",
-    url: "/" + tablename + "/" + id,
+    url: "/" + tablename + "/" + id + ".json",
     data: {
       authenticity_token: $('[name="csrf-token"]')[0].content,
       [model]: {[column]: value}
@@ -64,7 +64,7 @@ function updateModel(id, column, value) {
 function deleteModel(id) {
   $.ajax({
     type: "DELETE",
-    url: "/" + tablename + "/" + id + "?no_redirect=true",
+    url: "/" + tablename + "/" + id + ".json" + "?no_redirect=true",
     data: {
       authenticity_token: $('[name="csrf-token"]')[0].content,
     },
