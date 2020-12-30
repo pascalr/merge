@@ -1,3 +1,7 @@
+TODO: Add a minimum inactive delay before update partial. So not updating for nothing at every keystroke when writing.
+
+Also, when editing, don't send the whole document everytime. Only changes.
+
 
 app.get('/resizeImages', function(req,res) {
   exec("find ../recettesPascal/images -iname '*.jpg' -exec convert \\{} -verbose -resize 400x400\\> \\{} \\;", function(err, stdout, stderr) {

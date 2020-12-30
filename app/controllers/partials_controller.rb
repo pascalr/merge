@@ -41,6 +41,7 @@ class PartialsController < ApplicationController
   # PATCH/PUT /partials/1.json
   def update
     respond_to do |format|
+      logger.info "Update: format: #{request.format}"
       if @partial.update(partial_params)
         format.html { redirect_to @partial, notice: 'Partial was successfully updated.' }
         format.json { render :show, status: :ok, location: @partial }
