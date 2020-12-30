@@ -1,0 +1,2 @@
+class Partial < ApplicationRecord
+end

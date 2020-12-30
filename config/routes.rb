@@ -12,6 +12,7 @@ end
 
 Rails.application.routes.draw do
 
+  resources :partials
   devise_for :users
   app 'desktop'
   app 'gallery'

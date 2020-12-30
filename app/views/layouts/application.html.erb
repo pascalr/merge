@@ -5,6 +5,8 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_pack_tag 'application' %>
   </head>
@@ -20,6 +22,7 @@
     <% end %>
     <% unless current_user.nil? %>
       <div class="topnav">
+        <%= link_to "Partials", partials_path, class: 'topnavlink' %>
         <%= link_to "Desktop", desktop_path, class: 'topnavlink' %>
         <%= link_to "Personal", personal_path, class: 'topnavlink' %>
         <%= link_to "Gallery", images_path, class: 'topnavlink' %>
