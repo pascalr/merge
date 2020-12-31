@@ -18,7 +18,7 @@
 
 <%= form_with(model: @partial, local: true) do |form| %>
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Update", id: 'update-button' %>
   </div>
   <br><br>
   <%= form.hidden_field :content, id: 'content-field' %>
@@ -45,14 +45,25 @@
   function inputChanged(e) {
     field = document.getElementById('content-field')
     field.value = e.target.innerText
+    window.partial_dirty = true
     preview = document.getElementById('partial-preview')
     preview.innerHTML = Eta.render(e.target.innerText)
   }
+
+  document.getElementById('update-button').addEventListener("click", function(event) { 
+    window.partial_dirty = false
+  })
 
   document.addEventListener("DOMContentLoaded", function(event) { 
     field = document.getElementById('content-field')
     preview = document.getElementById('partial-preview')
     preview.innerHTML = Eta.render(field.value)
   })
+
+  window.onbeforeunload = function(){
+    if (window.partial_dirty) {
+      return 'Warning. There are some unsaved changes. Are you sure you want to leave?';
+    }
+  };
 
 </script>
