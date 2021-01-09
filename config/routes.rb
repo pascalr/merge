@@ -34,7 +34,7 @@ Rails.application.routes.draw do
 
   lazy_resources :phases
   lazy_resources :hypotheses
-  lazy_resources :documents
+  resources :documents
   lazy_resources :folders
   lazy_resources :contacts
   lazy_resources :tasks

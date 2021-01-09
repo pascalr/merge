@@ -1,3 +1,7 @@
+TODO: It must be really easy to do a document and add other documents in it.
+
+So for example, a document introduction, a spreadsheet, and some more text, you add those three files together in a erb master file!
+
 TODO: Allow a lot of templating engine. Currently I am only rendering server side (erb), but latter render client side.
 Client side rendering allows for realtime updating previews.
 See: https://expressjs.com/en/resources/template-engines.html

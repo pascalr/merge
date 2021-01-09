@@ -1,0 +1,9 @@
+<div>
+<%=
+  case document.extension
+  when "ejs" then render 'documents/ejs/show', document: document 
+  when "erb" then render 'documents/erb/show', document: document 
+  else document.content
+  end
+%>
+</div>
