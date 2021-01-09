@@ -1,11 +1,14 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @document.name %>
-</p>
+<% @document.ancestors.each do |a| %>
+  <%= link_to a.name, a %> >
+<% end %>
+<%= @document.name %>
 
-<%= link_to 'Edit', edit_document_path(@document) %> |
-<%= link_to 'Back', documents_path %>
+ -------------------------
+ <%= link_to 'Edit', edit_document_path(@document) %>
+ | <%= link_to 'Back', documents_path %>
+
+<br><br>
 
 <%= render @document %>

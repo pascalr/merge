@@ -1,3 +1,6 @@
+<% if !document.folder_id and params[:folder_id] %>
+  <% document.folder_id = params[:folder_id] %>
+<% end %>
 <%= form_with(model: document, local: true) do |form| %>
   <% if document.errors.any? %>
     <div id="error_explanation">
@@ -15,6 +18,11 @@
     <%= form.label :name %>
     <%= form.text_field :name %>
   </div>
+    
+  <div class="field">
+    <%= form.label :folder_id %>
+    <%= form.collection_select :folder_id, Folder.order(:name).all, :id, :name %>
+  </div>
 
   <div class="field">
     <%= form.label :extension %>
@@ -25,13 +33,15 @@
     <%= form.submit %>
   </div>
 
-  <%=
-    case document.extension
-    when "ejs" then render 'documents/ejs/form', form: form
-    when "erb" then render 'documents/erb/form', form: form
-    else render 'documents/trix/form', form: form
-    end
-  %>
+  <% unless document.new_record? %>
+    <%=
+      case document.extension
+      when "ejs" then render 'documents/ejs/form', form: form
+      when "erb" then render 'documents/erb/form', form: form
+      else render 'documents/trix/form', form: form
+      end
+    %>
+  <% end %>
 
 <% end %>
 

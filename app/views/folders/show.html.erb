@@ -1,11 +1,12 @@
 <h1><%= @folder.name %></h1>
 
+<%= link_to "New folder", new_folder_path(parent_id: @folder.id) %> | 
+<%= link_to "New document", new_document_path(folder_id: @folder.id) %><br><br>
+
 <% @folder.folders.each do |folder| %>
-  📁< <%= link_to folder.name, folder %><br>
+  📁<%= link_to folder.name, folder %><br>
 <% end %>
-<%= link_to "Add folder", new_folder_path %>
 
 <% @folder.documents.each do |doc| %>
   📝<%= link_to doc.name, doc %><br>
 <% end %>
-<%= link_to "Add document", new_document_path %>

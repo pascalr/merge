@@ -1,0 +1,13 @@
+<h1>New folder</h1>
+
+<%= form_with model: Folder.new(folder_id: params[:parent_id]), local: true do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  
+  <%= f.label :folder_id %>
+  <%= f.collection_select :folder_id, Folder.order(:name).all, :id, :name %>
+
+  <br>
+  <br>
+  <%= f.submit %>
+<% end %>
