@@ -1,9 +1,9 @@
-<%= form.hidden_field :body, id: 'content-field' %>
+<%= form.hidden_field :raw_content, id: 'content-field' %>
 
 <div class="row">
   <div class="col">
     <div class="leftside">
-      <div id="editable-partial" contenteditable="true" style="white-space: pre-wrap;"><%= @document.get_content %></div>
+      <div id="editable-partial" contenteditable="true" style="white-space: pre-wrap;"><%= @document.raw_content %></div>
     </div>
   </div>
   <div class="col">
@@ -12,8 +12,6 @@
 </div>
 
 <script>
-  document.getElementById('editable-partial').addEventListener('input', inputChanged);
-  
   function inputChanged(e) {
     field = document.getElementById('content-field')
     field.value = e.target.innerText
@@ -22,14 +20,16 @@
     preview.innerHTML = Eta.render(e.target.innerText)
   }
 
-  document.getElementById('update-button').addEventListener("click", function(event) { 
-    window.partial_dirty = false
-  })
-
   document.addEventListener("DOMContentLoaded", function(event) { 
     field = document.getElementById('content-field')
     preview = document.getElementById('partial-preview')
     preview.innerHTML = Eta.render(field.value)
+
+    document.getElementById('submit-button').addEventListener("click", function(event) { 
+      window.partial_dirty = false
+    })
+  
+    document.getElementById('editable-partial').addEventListener('input', inputChanged);
   })
 
   window.onbeforeunload = function(){

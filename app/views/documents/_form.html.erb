@@ -30,7 +30,7 @@
   </div>
   
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit nil, id: 'submit-button' %>
   </div>
 
   <% unless document.new_record? %>
