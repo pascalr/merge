@@ -1,3 +1,9 @@
+<%= link_to "/", folders_path %> >
+<% @folder.ancestors.each do |a| %>
+  <%= link_to a.name, a %> >
+<% end %>
+<%= @folder.name %>
+
 <h1><%= @folder.name %></h1>
 
 <%= link_to "New folder", new_folder_path(parent_id: @folder.id) %> | 
