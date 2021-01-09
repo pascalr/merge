@@ -16,13 +16,23 @@
     <%= form.text_field :name %>
   </div>
 
-  <div id="rich_text_area">
-  <%= form.rich_text_area :content %>
+  <div class="field">
+    <%= form.label :extension %>
+    <%= form.text_field :extension %>
   </div>
-
+  
   <div class="actions">
     <%= form.submit %>
   </div>
+
+  <%=
+    case document.extension
+    when "ejs" then render 'documents/ejs/form', form: form
+    when "erb" then render 'documents/erb/form', form: form
+    else render 'documents/trix/form', form: form
+    end
+  %>
+
 <% end %>
 
 <%= javascript_pack_tag :trix_editor_more %>
