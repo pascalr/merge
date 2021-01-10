@@ -1,9 +1,6 @@
 <%= link_to "New folder", new_folder_path %> | 
 <%= link_to "New document", new_document_path %><br><br>
 
-<%# x = (14072080 - 70690 - 516555 - 1384175 - 2097500.0/2) %>
-<%= x = (14072080 - 70690 - 516555 - 1384175 - 2097500.0/2) %>
-
 <% Folder.where(folder_id: nil).each do |folder| %>
   📁<%= link_to folder.name, folder %><br>
 <% end %>
