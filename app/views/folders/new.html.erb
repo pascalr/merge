@@ -5,7 +5,7 @@
   <%= f.text_field :name %>
   
   <%= f.label :folder_id %>
-  <%= f.collection_select :folder_id, Folder.order(:name).all, :id, :name %>
+  <%= f.collection_select :folder_id, Folder.order(:name).all, :id, :name, include_blank: '/' %>
 
   <br>
   <br>

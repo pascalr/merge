@@ -1,3 +1,5 @@
+heroku plugins:install https://github.com/naaman/heroku-vim
+
 # Chromebook
 # Download crouton
 # sudo install -Dt /usr/local/bin -m 755 ~/Downloads/crouton
