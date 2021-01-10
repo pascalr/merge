@@ -1,12 +1,6 @@
 <%= form.hidden_field :raw_content, id: 'content-field' %>
 
-<style>
-[contenteditable] {
-  outline: 0px solid transparent;
-}
-</style>
-
-<pre><code class="erb" contenteditable="true" id="editable-partial"></code><%= @document.raw_content %></pre>
+<pre><code class="erb" contenteditable="true" id="editable-partial"><%= @document.raw_content %></code></pre>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/default.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
@@ -15,13 +9,14 @@
     field = document.getElementById('content-field')
     field.value = e.target.innerText
     window.partial_dirty = true
-    hljs.highlightBlock(e.target);
+    preview = document.getElementById('partial-preview')
+    preview.innerHTML = Eta.render(e.target.innerText)
   }
 
   document.addEventListener("DOMContentLoaded", function(event) { 
-    document.querySelectorAll('pre code').forEach((block) => {
-      hljs.highlightBlock(block);
-    });
+    field = document.getElementById('content-field')
+    preview = document.getElementById('partial-preview')
+    preview.innerHTML = Eta.render(field.value)
 
     document.getElementById('submit-button').addEventListener("click", function(event) { 
       window.partial_dirty = false
@@ -35,4 +30,9 @@
       return 'Warning. There are some unsaved changes. Are you sure you want to leave?';
     }
   };
+  document.addEventListener('DOMContentLoaded', (event) => {
+    document.querySelectorAll('pre code').forEach((block) => {
+      hljs.highlightBlock(block);
+    });
+  });
 </script>
