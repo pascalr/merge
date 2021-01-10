@@ -1,3 +1,7 @@
+I am legend
+
+TODO: Start by doing TODO properly. All with js. No redirect? How to handle models?
+
 TODO: It must be really easy to do a document and add other documents in it.
 
 So for example, a document introduction, a spreadsheet, and some more text, you add those three files together in a erb master file!
