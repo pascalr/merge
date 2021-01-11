@@ -13,7 +13,10 @@
  *= require_tree .
  *= require_self
  *= require simple_calendar
+ *= require 'quill/dist/quill.core.css'
+ *= require 'quill/dist/quill.snow.css'
  */
+
 
 @import "./actiontext.scss";
 

@@ -38,11 +38,10 @@
       case document.extension
       when "ejs" then render 'documents/ejs/form', form: form
       when "erb" then render 'documents/erb/form', form: form
+      when "quill" then render 'documents/quill/form', form: form
       else render 'documents/trix/form', form: form
       end
     %>
   <% end %>
 
 <% end %>
-
-<%= javascript_pack_tag :trix_editor_more %>

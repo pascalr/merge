@@ -1,3 +1,6 @@
+I REALLY, REALLY, REALLY, REALLY, REALLY HATE WEBPACK. IT NEVER WORKS. IT LOOKS SO COMPLICATED. AND IT IS SO SLOW. WHAT THE FUCK WEBPACK...
+I THINK IT'S THE THINK I HATE THE MOST RIGHT NOW............
+
 I am legend
 
 TODO: Start by doing TODO properly. All with js. No redirect? How to handle models?
