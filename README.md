@@ -1,3 +1,20 @@
+NOOOO WYSIWYG, because it is NOT SAFE. There can be hidden evil code inserted in the document... Ah this is why Trix
+editor only allows some html!!!
+No WYSIWYG
+No WYSIWYG
+No WYSIWYG
+No WYSIWYG
+No WYSIWYG
+No WYSIWYG
+Side by side like Overleaf is quite nice actually.
+
+For erb. Side by side. And maybe live preview. Just hiding the erb. Or showing the initial erb when the page loaded, but not live update.
+
+Ok now I need routes.
+
+document                route
+/machine/tasks/show     /tasks/show/:id
+
 I REALLY, REALLY, REALLY, REALLY, REALLY HATE WEBPACK. IT NEVER WORKS. IT LOOKS SO COMPLICATED. AND IT IS SO SLOW. WHAT THE FUCK WEBPACK...
 I THINK IT'S THE THINK I HATE THE MOST RIGHT NOW............
 

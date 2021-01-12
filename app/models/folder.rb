@@ -3,8 +3,16 @@ class Folder < ApplicationRecord
   has_many :folders
   has_many :documents
 
+  def family
+    ancestors + [self]
+  end
+
   def ancestors
-    folder ? ([folder] + folder.ancestors) : []
+    folder ? (folder.ancestors + [folder]) : []
+  end
+
+  def fullpath
+    "/#{family.map(&:name).join('/')}"
   end
   
   def to_param

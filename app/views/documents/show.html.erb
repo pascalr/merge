@@ -1,5 +1,6 @@
 <p id="notice"><%= notice %></p>
 
+<%= link_to "/", folders_path %> > 
 <% @document.ancestors.each do |a| %>
   <%= link_to a.name, a %> >
 <% end %>

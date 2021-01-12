@@ -11,8 +11,16 @@ class Document < ApplicationRecord
   has_rich_text :content
   validates_with DocumentValidator
 
+  def family
+    ancestors + [self]
+  end
+
   def ancestors
-    folder ? ([folder] + folder.ancestors) : []
+    folder ? (folder.ancestors + [folder]) : []
+  end
+
+  def fullpath
+    "/#{family.map(&:name).join('/')}"
   end
 
   def to_param

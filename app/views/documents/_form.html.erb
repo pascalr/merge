@@ -21,7 +21,7 @@
     
   <div class="field">
     <%= form.label :folder_id %>
-    <%= form.collection_select :folder_id, Folder.order(:name).all, :id, :name, include_blank: "/" %>
+    <%= form.collection_select :folder_id, Folder.order(:name).all, :id, :fullpath, include_blank: "/" %>
   </div>
 
   <div class="field">
