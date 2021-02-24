@@ -1,7 +1,28 @@
+class DocumentValidator < ActiveModel::Validator
+  def validate(record)
+    if record.raw_content and (record.content and record.content.body and not record.content.body.empty?)
+      record.errors.add :base, "Can't have a document with both content and raw content."
+    end
+  end
+end
+
 class Document < ApplicationRecord
   belongs_to :folder, optional: true
   has_rich_text :content
-  
+  validates_with DocumentValidator
+
+  def family
+    ancestors + [self]
+  end
+
+  def ancestors
+    folder ? (folder.ancestors + [folder]) : []
+  end
+
+  def fullpath
+    "/#{family.map(&:name).join('/')}"
+  end
+
   def to_param
     "#{id}-#{name}"
   end

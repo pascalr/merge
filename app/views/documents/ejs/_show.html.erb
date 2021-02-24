@@ -1,0 +1,10 @@
+<div id="raw-content" hidden><%= @document.raw_content %></div>
+<div id='content'></div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) { 
+    raw = document.getElementById('raw-content')
+    content = document.getElementById('content')
+    content.innerHTML = Eta.render(raw.innerText)
+  })
+</script>

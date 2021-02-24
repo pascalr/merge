@@ -22,12 +22,14 @@
     <% end %>
     <% unless current_user.nil? %>
       <div class="topnav">
-        <%= link_to "Partials", partials_path, class: 'topnavlink' %>
         <%= link_to "Desktop", desktop_path, class: 'topnavlink' %>
+        <%= link_to "Files", folders_path, class: 'topnavlink' %>
+        <%= link_to "Database", database_path, class: 'topnavlink' %>
+        <%= link_to "Documents", documents_path, class: 'topnavlink' %>
+        <%= link_to "Partials", partials_path, class: 'topnavlink' %>
         <%= link_to "Personal", personal_path, class: 'topnavlink' %>
         <%= link_to "Gallery", images_path, class: 'topnavlink' %>
-        <%= link_to "Files", explorer_path, class: 'topnavlink' %>
-        <%= link_to "Database", database_path, class: 'topnavlink' %>
+        <%= link_to "Old files", explorer_path, class: 'topnavlink' %>
         <%= link_to "Todo", todos_path, class: 'topnavlink' %>
         <%= link_to "Bookmarks", bookmarks_path, class: 'topnavlink' %>
         <%= link_to "Calendrier", calendar_path, class: 'topnavlink' %>
@@ -37,8 +39,6 @@
         <%= link_to "Shopping list", shopping_list_path, class: 'topnavlink' %>
         <%= link_to "Cheatsheets", cheatsheet_path, class: 'topnavlink' %>
         <%= link_to "Editor", editor_path, class: 'topnavlink' %>
-        <%= link_to "Folders", folders_path, class: 'topnavlink' %>
-        <%= link_to "Documents", documents_path, class: 'topnavlink' %>
         <%= link_to destroy_user_session_path, class: 'topnavlink', method: :delete do %>Log out<% end %>
       </div>
     <% end %>

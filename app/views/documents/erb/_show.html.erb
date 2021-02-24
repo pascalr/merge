@@ -1,0 +1,5 @@
+<% @rendered_documents ||= {} %>
+<% raise "Document already rendered. Preventing possible infinite loop" if @rendered_documents[document.id] %>
+<% @rendered_documents[document.id] = true %>
+<%# <div style="white-space: pre-wrap;"> %>
+<%= render inline: document.raw_content %>

@@ -1,3 +1,6 @@
+<% if !document.folder_id and params[:folder_id] %>
+  <% document.folder_id = params[:folder_id] %>
+<% end %>
 <%= form_with(model: document, local: true) do |form| %>
   <% if document.errors.any? %>
     <div id="error_explanation">
@@ -15,14 +18,30 @@
     <%= form.label :name %>
     <%= form.text_field :name %>
   </div>
-
-  <div id="rich_text_area">
-  <%= form.rich_text_area :content %>
+    
+  <div class="field">
+    <%= form.label :folder_id %>
+    <%= form.collection_select :folder_id, Folder.order(:name).all, :id, :fullpath, include_blank: "/" %>
   </div>
 
+  <div class="field">
+    <%= form.label :extension %>
+    <%= form.text_field :extension %>
+  </div>
+  
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit nil, id: 'submit-button' %>
   </div>
-<% end %>
 
-<%= javascript_pack_tag :trix_editor_more %>
+  <% unless document.new_record? %>
+    <%=
+      case document.extension
+      when "ejs" then render 'documents/ejs/form', form: form
+      when "erb" then render 'documents/erb/form', form: form
+      when "quill" then render 'documents/quill/form', form: form
+      else render 'documents/trix/form', form: form
+      end
+    %>
+  <% end %>
+
+<% end %>

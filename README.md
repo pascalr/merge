@@ -1,3 +1,31 @@
+NOOOO WYSIWYG, because it is NOT SAFE. There can be hidden evil code inserted in the document... Ah this is why Trix
+editor only allows some html!!!
+No WYSIWYG
+No WYSIWYG
+No WYSIWYG
+No WYSIWYG
+No WYSIWYG
+No WYSIWYG
+Side by side like Overleaf is quite nice actually.
+
+For erb. Side by side. And maybe live preview. Just hiding the erb. Or showing the initial erb when the page loaded, but not live update.
+
+Ok now I need routes.
+
+document                route
+/machine/tasks/show     /tasks/show/:id
+
+I REALLY, REALLY, REALLY, REALLY, REALLY HATE WEBPACK. IT NEVER WORKS. IT LOOKS SO COMPLICATED. AND IT IS SO SLOW. WHAT THE FUCK WEBPACK...
+I THINK IT'S THE THINK I HATE THE MOST RIGHT NOW............
+
+I am legend
+
+TODO: Start by doing TODO properly. All with js. No redirect? How to handle models?
+
+TODO: It must be really easy to do a document and add other documents in it.
+
+So for example, a document introduction, a spreadsheet, and some more text, you add those three files together in a erb master file!
+
 TODO: Allow a lot of templating engine. Currently I am only rendering server side (erb), but latter render client side.
 Client side rendering allows for realtime updating previews.
 See: https://expressjs.com/en/resources/template-engines.html

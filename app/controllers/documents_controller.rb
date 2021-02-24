@@ -69,6 +69,9 @@ class DocumentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def document_params
-      params.require(:document).permit(:name, :content)
+      p = params.require(:document).permit(:name, :content, :raw_content, :folder_id, :extension)
+      #p[:raw_content] = p[:raw_content].gsub(160.chr("UTF-8")," ") if p[:raw_content]
+      p[:raw_content].gsub!(160.chr("UTF-8")," ") if p[:raw_content]
+      p
     end
 end

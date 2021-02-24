@@ -1,13 +1,18 @@
+<%= link_to "/", folders_path %> >
+<% @folder.ancestors.each do |a| %>
+  <%= link_to a.name, a %> >
+<% end %>
+<%= @folder.name %>
+
 <h1><%= @folder.name %></h1>
 
-<h2>Folders</h2>
-<% @folder.folders.each do |folder| %>
-  <%= link_to folder.name, folder %><br>
-<% end %>
-<%= link_to "Add folder", new_folder_path %>
+<%= link_to "New folder", new_folder_path(parent_id: @folder.id) %> | 
+<%= link_to "New document", new_document_path(folder_id: @folder.id) %><br><br>
 
-<h2>Documents</h2>
-<% @folder.documents.each do |doc| %>
-  <%= link_to doc.name, doc %><br>
+<% @folder.folders.each do |folder| %>
+  📁<%= link_to folder.name, folder %><br>
 <% end %>
-<%= link_to "Add document", new_document_path %>
+
+<% @folder.documents.each do |doc| %>
+  📝<%= link_to doc.name, doc %><br>
+<% end %>

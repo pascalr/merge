@@ -90,6 +90,8 @@ ActiveRecord::Schema.define(version: 2021_02_22_135415) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "folder_id"
+    t.string "extension"
+    t.text "raw_content"
     t.index ["folder_id"], name: "index_documents_on_folder_id"
   end
 
