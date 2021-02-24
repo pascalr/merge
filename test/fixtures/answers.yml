@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  interest: 1
+  zero_waste: 1
+  raw_concerns: MyString
+  raw_would_buy: MyString
+  raw_evaluation: MyString
+  would_fill: MyString
+  how_to_pay: MyString
+  how_to_fix: MyString
+  region: MyString
+  gender: MyString
+  revenue: MyString
+  how_many_people: MyString
+
+two:
+  interest: 1
+  zero_waste: 1
+  raw_concerns: MyString
+  raw_would_buy: MyString
+  raw_evaluation: MyString
+  would_fill: MyString
+  how_to_pay: MyString
+  how_to_fix: MyString
+  region: MyString
+  gender: MyString
+  revenue: MyString
+  how_many_people: MyString
